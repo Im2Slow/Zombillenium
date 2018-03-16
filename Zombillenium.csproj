@@ -49,11 +49,7 @@
     <Compile Include="Spectacle.cs" />
     <Compile Include="Vampire.cs" />
     <Compile Include="Zombie.cs" />
-    <Compile Include="EmptyInterface.cs" />
-    <Compile Include="IZombiable.cs" />
-    <Compile Include="IVampirable.cs" />
-    <Compile Include="IFantomable.cs" />
-    <Compile Include="ILoupGarouable.cs" />
+    <Compile Include="IVanishable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

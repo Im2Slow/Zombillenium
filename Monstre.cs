@@ -24,6 +24,10 @@ namespace Zombillenium
 			get {return this.affectation;}
 			set { affectation = value; }
 		}
+        public void Vanish()
+        {
+            affectation = null;
+        }
 	}
 }
 

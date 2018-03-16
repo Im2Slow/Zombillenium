@@ -2,7 +2,7 @@
 
 namespace Zombillenium
 {
-    public class LoupGarou : Monstre, ILoupGarouable
+    public class LoupGarou : Monstre
 	{
 		int indice_cruaute;
 

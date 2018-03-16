@@ -22,6 +22,11 @@ namespace Zombillenium
 			this.sexe = sexe;
 			this.fonction = fonction;
 		}
+        public int Matricule
+        {
+            get { return Matricule; }
+            set { matricule = value; }
+        }
 	}
 }
 
