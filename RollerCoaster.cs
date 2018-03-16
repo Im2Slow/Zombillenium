@@ -8,7 +8,7 @@ namespace Zombillenium
 		int ageMin;
 		string categorie;
 		float tailleMin;
-		public RollerCoaster (int id, bool maintenance, string nature_maintenance, int nbr_min_monstres, string nom, bool ouvert, string type_besoin, bool besoin_spe, TimeSpan duree_maintenance,int ageMin, string categorie, float tailleMin):base(id,maintenance,nature_maintenance,nbr_min_monstres,nom,ouvert,type_besoin,besoin_spe,duree_maintenance)
+        public RollerCoaster (int id, string nom, int nbr_min_monstres,bool besoin_spe, string type_besoin, string categorie, int ageMin,float tailleMin):base(id,nom,nbr_min_monstres,besoin_spe,type_besoin)
 		{
 			this.ageMin = ageMin;
 			this.categorie = categorie;

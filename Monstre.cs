@@ -2,12 +2,12 @@
 
 namespace Zombillenium
 {
-	public abstract class Monstre : Personnel
+	public class Monstre : Personnel
 	{
 		Attraction affectation;
 		int cagnotte;
 
-		 Monstre (int matricule, string nom, string prenom, string sexe, string fonction, Attraction affectation, int cagnotte):base(matricule,nom,prenom,sexe,fonction)
+        public Monstre (int matricule, string nom, string prenom, string sexe, string fonction, int cagnotte, Attraction affectation):base(matricule,nom,prenom,sexe,fonction)
 		{
 			this.affectation = affectation;
 			this.cagnotte = cagnotte;

@@ -11,7 +11,7 @@ namespace Zombillenium
 			get{ return vanishable; }
 			set{ vanishable = value; }
 		}
-		public Demon (int matricule, string nom, string prenom, string sexe, string fonction, Attraction affectation, int cagnotte, int force):base(matricule,nom,prenom,sexe,fonction,affectation,cagnotte)
+        public Demon (int matricule, string nom, string prenom, string sexe, string fonction, int cagnotte, Attraction affectation,int force):base(matricule,nom,prenom,sexe,fonction,cagnotte,affectation)
 		{
 			this.force = force;
 		}

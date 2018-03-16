@@ -6,7 +6,7 @@ namespace Zombillenium
 	{
 		int indice_cruaute;
 
-		public LoupGarou (int matricule, string nom, string prenom, string sexe, string fonction, Attraction affectation, int cagnotte, int indice_cruaute):base(matricule,nom,prenom,sexe,fonction,affectation,cagnotte)
+        public LoupGarou (int matricule, string nom, string prenom, string sexe, string fonction, int cagnotte, Attraction affectation, int indice_cruaute):base(matricule,nom,prenom,sexe,fonction,cagnotte, affectation)
 		{
 			this.indice_cruaute = indice_cruaute;
 		}
