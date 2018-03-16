@@ -53,7 +53,7 @@ namespace Zombillenium
 				sujet.Affectation = null;
 			}
 		}
-		public List<Monstre> Equipe(Attraction attr)
+		public List<Monstre> Equipe(Attraction attr) // Monstres ou Personnel ? On compte les sorcieres ?
 		{
 			List<Monstre> team = new List<Monstre> ();
 			foreach (Monstre i in membres)
@@ -65,7 +65,7 @@ namespace Zombillenium
 			}
 			return team;
 		}
-		public void GestionEquipe()
+		public void GestionEquipe() // check les types de monstres via des interfaces, mais n'accède pas encore aux caractéristiques propre à un monstre
 		{
 			foreach (Attraction i in attractions)
 			{
@@ -87,7 +87,14 @@ namespace Zombillenium
                             {
                                 Equipe(i).Add(j);
                             }
-
+                            else if (i.Type_besoin == "Fantome" && j is IFantomable)
+                            {
+                                Equipe(i).Add(j);
+                            }
+                            else if (i.Type_besoin == "LoupGarou" && j is ILoupGarouable)
+                            {
+                                Equipe(i).Add(j);
+                            }
                         }
                         if(Equipe(i).Count < i.Nbr_min_monstres && j.Affectation == null)
                         {
@@ -97,8 +104,9 @@ namespace Zombillenium
                 }
 			}
 		}
-        public void ReadCSV(string chemin)
+        public void ReadCSV(string chemin) // ne check pas si les attractions sont ouvertes ou en maintenance
         {
+            //si l'attraction affectée à un monstre à instancier n'existe pas, 
             StreamReader monStreamReader = new StreamReader(chemin);
             string ligne = monStreamReader.ReadLine();
 

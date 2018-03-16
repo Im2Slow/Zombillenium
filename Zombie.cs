@@ -2,7 +2,7 @@
 
 namespace Zombillenium
 {
-	public class Zombie : Monstre
+    public class Zombie : Monstre, IZombiable
 	{
 		int degre_decomp;
 		string couleur;

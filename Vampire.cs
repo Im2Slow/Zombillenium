@@ -2,7 +2,7 @@
 
 namespace Zombillenium
 {
-	public class Vampire : Monstre
+    public class Vampire : Monstre,IVampirable
 	{
 		float indice_luminosite;
         public Vampire (int matricule, string nom, string prenom, string sexe, string fonction, int cagnotte, Attraction affectation, float indice_luminosite):base(matricule,nom,prenom,sexe,fonction,cagnotte, affectation)

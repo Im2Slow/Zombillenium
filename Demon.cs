@@ -2,7 +2,7 @@
 
 namespace Zombillenium
 {
-	public class Demon : Monstre
+    public class Demon : Monstre, IDemonable
 	{
 		int force;
 		bool vanishable;
