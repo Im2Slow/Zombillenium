@@ -103,17 +103,20 @@ namespace Zombillenium
             while (ligne != null)
             {
                 string[] temp = ligne.Split(';');
-                if (temp[0] == "Sorcier")
+                int temp1 = Int32.Parse(temp[1]);
+                foreach (Personnel i in membres)
                 {
-                    int temp1 = Int32.Parse(temp[1]);
-                    foreach (Personnel i in membres)
+                    foreach (Attraction j in attractions)
                     {
-                        if (i.Matricule == temp1)
+                        if (i.Matricule == temp1 || j.Id == temp1)
                         {
-                            Console.Write("Erreur : l'individu existe deja dans le logiciel"); //message d'erreur temporaire
+                            Console.WriteLine("Erreur : l'individu existe deja dans le logiciel"); //message d'erreur temporaire
                             System.Environment.Exit(1);
                         }
                     }
+                }
+                if (temp[0] == "Sorcier")
+                {
                     string[] listeValues = temp[7].Split('-');
                     List<string> powers = new List<string>();
                     foreach (string value in listeValues)
@@ -125,15 +128,6 @@ namespace Zombillenium
                 }
                 else if (temp[0] == "Boutique" || temp[0] == "RollerCoaster" || temp[0] == "DarkRide" || temp[0] == "Spectacle")
                 {
-                    int temp1 = Int32.Parse(temp[1]);
-                    foreach (Attraction i in attractions)
-                    {
-                        if (i.Id == temp1)
-                        {
-                            Console.Write("Erreur : l'individu existe deja dans le logiciel"); //message d'erreur temporaire
-                            System.Environment.Exit(1);
-                        }
-                    }
                     int temp3 = Int32.Parse(temp[3]);
                     bool temp4 = Boolean.Parse(temp[4]);
                     switch (temp[0])
@@ -169,15 +163,6 @@ namespace Zombillenium
                 }
                 else
                 {
-                    int temp1 = Int32.Parse(temp[1]);
-                    foreach (Monstre i in membres)
-                    {
-                        if (i.Matricule == temp1)
-                        {
-                            Console.Write("Erreur : l'individu existe deja dans le logiciel"); //message d'erreur temporaire
-                            System.Environment.Exit(1);
-                        }
-                    }
                     int temp6 = Int32.Parse(temp[6]);
                     int temp7 = Int32.Parse(temp[7]);
                     foreach (Attraction i in attractions)
