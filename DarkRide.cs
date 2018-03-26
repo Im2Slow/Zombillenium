@@ -12,6 +12,10 @@ namespace Zombillenium
 			this.duree = duree;
 			this.vehicule = vehicule;
 		}
+		public override string ToString()
+		{
+            return base.ToString() + " , duree : " + duree;
+		}
 	}
 }
 

@@ -53,6 +53,10 @@ namespace Zombillenium
             get { return type_besoin; }
             set { type_besoin = value; }
         }
+		public override string ToString()
+		{
+            return nom + " , id : " + id + " , nombre min monstres : " + nbr_min_monstres + " , type besoins : " + type_besoin;
+		}
 	}
 }
 

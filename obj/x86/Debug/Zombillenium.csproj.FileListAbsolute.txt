@@ -1,0 +1,5 @@
+/home/adrien/Documents/ProgCsharp/Zombillenium/bin/Debug/Zombillenium.exe
+/home/adrien/Documents/ProgCsharp/Zombillenium/bin/Debug/Zombillenium.pdb
+/home/adrien/Documents/ProgCsharp/Zombillenium/obj/x86/Debug/Zombillenium.csproj.CoreCompileInputs.cache
+/home/adrien/Documents/ProgCsharp/Zombillenium/obj/x86/Debug/Zombillenium.exe
+/home/adrien/Documents/ProgCsharp/Zombillenium/obj/x86/Debug/Zombillenium.pdb

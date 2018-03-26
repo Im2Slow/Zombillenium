@@ -14,6 +14,16 @@ namespace Zombillenium
 			this.nom_salle = nom_salle;
 			this.nbr_places = nbr_places;
 		}
+		public override string ToString()
+		{
+            string toReturn = "";
+            toReturn = base.ToString() + ", nom salle : " + nom_salle + " , nombre places : " + nbr_places + " , horaires : ";
+            foreach (DateTime i in horaire)
+            {
+                toReturn += i.Hour + ":" + i.Minute + " ";
+            }
+            return toReturn;
+		}
 	}
 }
 

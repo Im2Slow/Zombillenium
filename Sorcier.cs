@@ -12,6 +12,15 @@ namespace Zombillenium
 			this.tatouage = tatouage;
 			this.pouvoirs = pouvoirs;
 		}
+		public override string ToString()
+		{
+            string toReturn = base.ToString() + ", pouvoirs : ";
+            foreach (string i in pouvoirs)
+            {
+                toReturn += " - " + i;
+            }
+            return toReturn;
+		}
 	}
 }
 

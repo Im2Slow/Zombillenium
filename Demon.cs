@@ -9,6 +9,10 @@ namespace Zombillenium
 		{
 			this.force = force;
 		}
+		public override string ToString()
+		{
+            return base.ToString() + ", force : " + force;
+		}
 	}
 }
 

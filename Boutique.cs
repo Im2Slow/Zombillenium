@@ -15,6 +15,10 @@ namespace Zombillenium
 			get { return type; }
 			set { type = value; }
 		}
+		public override string ToString()
+		{
+            return base.ToString() + " , type : " + type;
+		}
 	}
 }
 

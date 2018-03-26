@@ -9,12 +9,20 @@ namespace Zombillenium
         List<Attraction> attractions;
         List<Personnel> membres;
         Boutique purgatory;
-        public Administration(string chemin)
+        public Administration()
         {
             attractions = new List<Attraction>();
             purgatory = new Boutique(57, "La barbe à SEGPA", 1, false, "", "barbe a papa");
             attractions.Add(purgatory);
             membres = new List<Personnel>();
+        }
+        public List<Attraction> Attractions
+        {
+            get { return attractions; }
+        }
+        public List<Personnel> Membres
+        {
+            get { return membres; }
         }
         public void AjoutAttraction(Attraction toAdd)
         {
@@ -75,7 +83,7 @@ namespace Zombillenium
                             }
                             else if (i.Type_besoin == "Vampire" && j is Vampire && j.Affectation == null)
                             {
-                                Affecter(j as Vampire, i);;
+                                Affecter(j as Vampire, i);
                             }
                             else if (i.Type_besoin == "Fantome" && j is Fantome && j.Affectation == null)
                             {
@@ -98,22 +106,15 @@ namespace Zombillenium
         {
             //si l'attraction affectée à un monstre à instancier n'existe pas, ne crée pas l'instance du monstre
             StreamReader monStreamReader = new StreamReader(chemin);
-            string ligne = monStreamReader.ReadLine();
-
-            while (ligne != null)
+            string ligne;
+            while ((ligne = monStreamReader.ReadLine()) != null)
             {
                 string[] temp = ligne.Split(';');
                 int temp1 = Int32.Parse(temp[1]);
-                foreach (Personnel i in membres)
+                for (int i = 0; i < temp.Length; i++) //test
                 {
-                    foreach (Attraction j in attractions)
-                    {
-                        if (i.Matricule == temp1 || j.Id == temp1)
-                        {
-                            Console.WriteLine("Erreur : l'individu existe deja dans le logiciel"); //message d'erreur temporaire
-                            System.Environment.Exit(1);
-                        }
-                    }
+                   //Console.WriteLine(temp[i]); //works
+
                 }
                 if (temp[0] == "Sorcier")
                 {
@@ -123,10 +124,11 @@ namespace Zombillenium
                     {
                         powers.Add(value);
                     }
-                    Sorcier s = new Sorcier(temp1, temp[2], temp[3], temp[4], temp[5], temp[6], powers);
-                    AjoutPersonnel(s);
+                    Sorcier so = new Sorcier(temp1, temp[2], temp[3], temp[4], temp[5], temp[6], powers);
+                    //Console.WriteLine(s.ToString()); // works
+                    AjoutPersonnel(so);
                 }
-                else if (temp[0] == "Boutique" || temp[0] == "RollerCoaster" || temp[0] == "DarkRide" || temp[0] == "Spectacle")
+                else if (temp[0] == "Boutique" || temp[0] == "RollerCoaster" || temp[0] == "DarkRide" || temp[0] == "Spectacles")
                 {
                     int temp3 = Int32.Parse(temp[3]);
                     bool temp4 = Boolean.Parse(temp[4]);
@@ -134,77 +136,178 @@ namespace Zombillenium
                     {
                         case "Boutique":
                             Boutique b = new Boutique(temp1, temp[2], temp3, temp4, temp[5], temp[6]); //est-ce qu'ajouter des instances du même nom à la liste pose probleme ? 
-                            AjoutAttraction(b);                                                        
+                            AjoutAttraction(b);;
                             break;
                         case "RollerCoaster":
                             int temp7_rc = Int32.Parse(temp[7]);
                             float temp8_rc = float.Parse(temp[8]);
-                            RollerCoaster r = new RollerCoaster(temp1, temp[2], temp3, temp4, temp[5], temp[6], temp7_rc, temp8_rc);
-                            AjoutAttraction(r);
+                            RollerCoaster rc = new RollerCoaster(temp1, temp[2], temp3, temp4, temp[5], temp[6], temp7_rc, temp8_rc);
+                            AjoutAttraction(rc);
                             break;
-                        case "Spectacle":
+                        case "Spectacles":
                             int temp7_s = Int32.Parse(temp[7]);
                             List<DateTime> tempList = new List<DateTime>();
-                            string[] listeDate = temp[8].Split(':');
+                            string[] listeDate = temp[8].Split(' ');
                             foreach (string value in listeDate)
                             {
                                 tempList.Add(DateTime.Parse(value));
                             }
-                            Spectacle s = new Spectacle(temp1, temp[2], temp3, temp4, temp[5], temp[6], temp7_s, tempList);
-                            AjoutAttraction(s);
+                            Spectacle sp = new Spectacle(temp1, temp[2], temp3, temp4, temp[5], temp[6], temp7_s, tempList);
+                            AjoutAttraction(sp);
                             break;
                         case "DarkRide":
                             TimeSpan temp6_d = TimeSpan.Parse(temp[6]);
                             bool temp7_d = Boolean.Parse(temp[7]);
-                            DarkRide d = new DarkRide(temp1, temp[2], temp3, temp4, temp[5], temp6_d, temp7_d);
-                            AjoutAttraction(d);
+                            DarkRide dr = new DarkRide(temp1, temp[2], temp3, temp4, temp[5], temp6_d, temp7_d);
+                            AjoutAttraction(dr);
                             break;
                     }
                 }
                 else
                 {
                     int temp6 = Int32.Parse(temp[6]);
-                    int temp7 = Int32.Parse(temp[7]);
-                    foreach (Attraction i in attractions)
+                    int temp7;
+                    try
                     {
-                        if (i.Id == temp7)
+                        temp7 = Int32.Parse(temp[7]);
+                    }
+                    catch (FormatException)
+                    {
+                        temp7 = -1;
+                    }
+                        switch (temp[0])
                         {
-                            switch (temp[0])
+                            case "Monstre":
+                            foreach (Attraction i in attractions)
                             {
-                                case "Monstre":
+                                if (i.Id == temp7)
+                                {
                                     Monstre m = new Monstre(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i);
                                     AjoutPersonnel(m);
-                                    break;
-                                case "Demon":
-                                    int temp8 = Int32.Parse(temp[8]);
-                                    Demon d = new Demon(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp8);
+                                }
+                            }
+                                if (temp7 == -1)
+                                {
+                                    Monstre m = new Monstre(temp1, temp[2], temp[3], temp[4], temp[5], temp6, null);
+                                    AjoutPersonnel(m);
+                                }
+                                break;
+                            case "Demon":
+                                int temp8;
+                                try
+                                {
+                                    temp8 = Int32.Parse(temp[8]);
+                                }
+                                catch (FormatException)
+                                {
+                                    temp8 = -1;
+                                }
+                                foreach (Attraction i in attractions)
+                                {
+                                    if (i.Id == temp7)
+                                    {
+                                        Demon d = new Demon(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp8);
+                                        //Console.WriteLine(d.ToString());
+                                     AjoutPersonnel(d);
+                                    }
+                                }
+                                if (temp7 == -1)
+                                {
+                                    Demon d = new Demon(temp1, temp[2], temp[3], temp[4], temp[5], temp6, null, temp8);
+                                    //Console.WriteLine(d.ToString());
                                     AjoutPersonnel(d);
-                                    break;
-                                case "Fantome":
-                                    Fantome f = new Fantome(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i);
+                                }
+                                break;
+                            case "Fantome":
+                                foreach (Attraction i in attractions)
+                                {
+                                    if (i.Id == temp7)
+                                    {
+                                        Fantome f = new Fantome(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i);
+                                        AjoutPersonnel(f);
+                                    }
+                                }
+                                if (temp7 == -1)
+                                {
+                                    Fantome f = new Fantome(temp1, temp[2], temp[3], temp[4], temp[5], temp6, null);
                                     AjoutPersonnel(f);
-                                    break;
-                                case "Zombie":
-                                    int temp9 = Int32.Parse(temp[9]);
+                                }
+                                break;
+                            case "Zombie":
+                                int temp9;
+                                try
+                                {
+                                    temp9 = Int32.Parse(temp[9]);
+                                }
+                                catch (FormatException)
+                                {
+                                    temp9 = -1;
+                                }
+                                foreach (Attraction i in attractions)
+                                {
+                                    if (i.Id == temp7)
+                                    {
                                     Zombie z = new Zombie(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp[8], temp9);
                                     AjoutPersonnel(z);
-                                    break;
-                                case "Vampire":
-                                    float temp8_v = Int32.Parse(temp[8]);
-                                    Vampire v = new Vampire(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp8_v);
+                                    }
+                                }
+                                if (temp7 == -1)
+                                {
+                                    Zombie z = new Zombie(temp1, temp[2], temp[3], temp[4], temp[5], temp6, null, temp[8], temp9);
+                                    AjoutPersonnel(z);
+                                }
+                                break;
+                            case "Vampire":
+                                float temp8_v;
+                                try
+                                {
+                                    temp8_v = Int32.Parse(temp[8]);
+                                }
+                                catch (FormatException)
+                                {
+                                    temp8_v = -1;
+                                }
+                                foreach (Attraction i in attractions)
+                                {
+                                    if (i.Id == temp7)
+                                    {
+                                        Vampire v = new Vampire(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp8_v);
+                                        AjoutPersonnel(v);
+                                    }
+                                }
+                                if (temp7 == -1)
+                                {
+                                    Vampire v = new Vampire(temp1, temp[2], temp[3], temp[4], temp[5], temp6, null, temp8_v);
                                     AjoutPersonnel(v);
-                                    break;
-                                case "LoupGarou":
-                                    int temp8_lg = Int32.Parse(temp[8]);
-                                    LoupGarou lg = new LoupGarou(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp8_lg);
+                                }
+                                break;
+                            case "LoupGarou":
+                                int temp8_lg;
+                                try
+                                {
+                                    temp8_lg = Int32.Parse(temp[8]);
+                                }
+                                catch (FormatException)
+                                {
+                                    temp8_lg = -1;
+                                }
+                                foreach (Attraction i in attractions)
+                                {
+                                    if (i.Id == temp7)
+                                    {
+                                        LoupGarou lg = new LoupGarou(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp8_lg);
+                                        AjoutPersonnel(lg);
+                                    }
+                                }
+                                if (temp7 == -1)
+                                {
+                                    LoupGarou lg = new LoupGarou(temp1, temp[2], temp[3], temp[4], temp[5], temp6, null, temp8_lg);
                                     AjoutPersonnel(lg);
-                                    break;
-
-                            }
+                                }
+                                break;
                         }
-                    }
                 }
-                ligne = monStreamReader.ReadLine();
+
             }
             monStreamReader.Close();
         }

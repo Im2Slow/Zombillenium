@@ -28,6 +28,19 @@ namespace Zombillenium
         {
             affectation = null;
         }
+		public override string ToString()
+		{
+            string toReturn = base.ToString() + ", cagnotte : " + cagnotte + ", affectation : ";
+            if (affectation != null)
+            {
+                toReturn += affectation.Id;
+            }
+            else
+            {
+                toReturn += "neant";
+            }
+            return toReturn;
+		}
 	}
 }
 

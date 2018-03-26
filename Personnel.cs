@@ -27,6 +27,10 @@ namespace Zombillenium
             get { return Matricule; }
             set { matricule = value; }
         }
+		public override string ToString()
+		{
+            return "matricule : " + matricule + ", nom : " + nom + ", prenom : " + prenom + ", sexe : " + sexe + ", fonction : " + fonction;
+		}
 	}
 }
 
