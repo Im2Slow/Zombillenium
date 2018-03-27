@@ -63,7 +63,7 @@ namespace Zombillenium
             }
             return team;
         }
-        public void GestionEquipe() // check les types de monstres via des interfaces, mais n'accède pas encore aux caractéristiques propre à un monstre
+        public void GestionEquipe() // check les types de monstres , mais n'accède pas encore aux caractéristiques propre à un monstre
         {
             foreach (Attraction i in attractions)
             {
@@ -105,6 +105,7 @@ namespace Zombillenium
         public void ReadCSV(string chemin) // ne check pas si les attractions sont ouvertes ou en maintenance
         {
             //si l'attraction affectée à un monstre à instancier n'existe pas, ne crée pas l'instance du monstre
+            //s'il n'y a pas d'attraction affectée, crée l'instance du monstre avec pour attraction null
             StreamReader monStreamReader = new StreamReader(chemin);
             string ligne;
             while ((ligne = monStreamReader.ReadLine()) != null)
@@ -128,7 +129,7 @@ namespace Zombillenium
                     //Console.WriteLine(s.ToString()); // works
                     AjoutPersonnel(so);
                 }
-                else if (temp[0] == "Boutique" || temp[0] == "RollerCoaster" || temp[0] == "DarkRide" || temp[0] == "Spectacles")
+                else if (temp[0] == "Boutique" || temp[0] == "RollerCoaster" || temp[0] == "DarkRide" || temp[0] == "Spectacle")
                 {
                     int temp3 = Int32.Parse(temp[3]);
                     bool temp4 = Boolean.Parse(temp[4]);
@@ -144,7 +145,7 @@ namespace Zombillenium
                             RollerCoaster rc = new RollerCoaster(temp1, temp[2], temp3, temp4, temp[5], temp[6], temp7_rc, temp8_rc);
                             AjoutAttraction(rc);
                             break;
-                        case "Spectacles":
+                        case "Spectacle":
                             int temp7_s = Int32.Parse(temp[7]);
                             List<DateTime> tempList = new List<DateTime>();
                             string[] listeDate = temp[8].Split(' ');
@@ -178,14 +179,14 @@ namespace Zombillenium
                         switch (temp[0])
                         {
                             case "Monstre":
-                            foreach (Attraction i in attractions)
-                            {
-                                if (i.Id == temp7)
+                                foreach (Attraction i in attractions)
                                 {
-                                    Monstre m = new Monstre(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i);
-                                    AjoutPersonnel(m);
+                                    if (i.Id == temp7)
+                                    {
+                                        Monstre m = new Monstre(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i);
+                                        AjoutPersonnel(m);
+                                    }
                                 }
-                            }
                                 if (temp7 == -1)
                                 {
                                     Monstre m = new Monstre(temp1, temp[2], temp[3], temp[4], temp[5], temp6, null);
