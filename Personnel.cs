@@ -24,7 +24,7 @@ namespace Zombillenium
 		}
         public int Matricule
         {
-            get { return Matricule; }
+            get { return matricule; }
             set { matricule = value; }
         }
 		public override string ToString()

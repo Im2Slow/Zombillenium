@@ -102,21 +102,14 @@ namespace Zombillenium
                 }
             }
         }
-        public void ReadCSV(string chemin) // ne check pas si les attractions sont ouvertes ou en maintenance
+        public void ReadCSV(string chemin)
         {
-            //si l'attraction affectée à un monstre à instancier n'existe pas, ne crée pas l'instance du monstre
-            //s'il n'y a pas d'attraction affectée, crée l'instance du monstre avec pour attraction null
             StreamReader monStreamReader = new StreamReader(chemin);
             string ligne;
             while ((ligne = monStreamReader.ReadLine()) != null)
             {
                 string[] temp = ligne.Split(';');
                 int temp1 = Int32.Parse(temp[1]);
-                for (int i = 0; i < temp.Length; i++) //test
-                {
-                   //Console.WriteLine(temp[i]); //works
-
-                }
                 if (temp[0] == "Sorcier")
                 {
                     string[] listeValues = temp[7].Split('-');
@@ -126,7 +119,6 @@ namespace Zombillenium
                         powers.Add(value);
                     }
                     Sorcier so = new Sorcier(temp1, temp[2], temp[3], temp[4], temp[5], temp[6], powers);
-                    //Console.WriteLine(s.ToString()); // works
                     AjoutPersonnel(so);
                 }
                 else if (temp[0] == "Boutique" || temp[0] == "RollerCoaster" || temp[0] == "DarkRide" || temp[0] == "Spectacle")
@@ -136,7 +128,7 @@ namespace Zombillenium
                     switch (temp[0])
                     {
                         case "Boutique":
-                            Boutique b = new Boutique(temp1, temp[2], temp3, temp4, temp[5], temp[6]); //est-ce qu'ajouter des instances du même nom à la liste pose probleme ? 
+                            Boutique b = new Boutique(temp1, temp[2], temp3, temp4, temp[5], temp[6]); 
                             AjoutAttraction(b);;
                             break;
                         case "RollerCoaster":
