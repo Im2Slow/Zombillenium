@@ -14,6 +14,21 @@ namespace Zombillenium
 			this.categorie = categorie;
 			this.tailleMin = tailleMin;
 		}
+        public int AgeMin
+        {
+            get { return ageMin; }
+            set { ageMin = value; }
+        }
+        public float TailleMin
+        {
+            get { return tailleMin; }
+            set { tailleMin = value; }
+        }
+        public string Categorie
+        {
+            get { return categorie; }
+            set { categorie = value; }
+        }
 		public override string ToString()
 		{
             return base.ToString() + " , age min : " + ageMin + " , categorie : " + categorie + " , taille min : " + tailleMin;

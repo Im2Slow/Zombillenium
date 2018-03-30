@@ -14,6 +14,21 @@ namespace Zombillenium
 			this.nom_salle = nom_salle;
 			this.nbr_places = nbr_places;
 		}
+        public int Nbr_places
+        {
+            get { return nbr_places; }
+            set { nbr_places = value; }
+        }
+        public string Nom_salle
+        {
+            get { return nom_salle; }
+            set { nom_salle = value; }
+        }
+        public List<DateTime> Horaire
+        {
+            get { return horaire; }
+            set { horaire = value; }
+        }
 		public override string ToString()
 		{
             string toReturn = "";

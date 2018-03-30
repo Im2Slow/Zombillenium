@@ -12,6 +12,16 @@ namespace Zombillenium
 			this.duree = duree;
 			this.vehicule = vehicule;
 		}
+        public TimeSpan Duree
+        {
+            get { return duree; }
+            set { duree = value; }
+        }
+        public bool Vehicule
+        {
+            get { return vehicule; }
+            set { vehicule = value; }
+        }
 		public override string ToString()
 		{
             return base.ToString() + " , duree : " + duree;

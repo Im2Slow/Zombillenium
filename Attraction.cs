@@ -53,6 +53,16 @@ namespace Zombillenium
             get { return type_besoin; }
             set { type_besoin = value; }
         }
+        public string Nature_maintenance
+        {
+            get { return nature_maintenance; }
+            set { nature_maintenance = value; }
+        }
+        public TimeSpan Duree_maintenance
+        {
+            get { return duree_maintenance; }
+            set { duree_maintenance = value; }
+        }
 		public override string ToString()
 		{
             return nom + " , id : " + id + " , nombre min monstres : " + nbr_min_monstres + " , type besoins : " + type_besoin;

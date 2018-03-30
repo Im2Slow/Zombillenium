@@ -52,7 +52,6 @@ namespace Zombillenium
                                         {
                                             try
                                             {
-                                                Console.WriteLine("hit");
                                                 reponseMat = int.Parse(stringMat);
                                                 int compteur = 0;
                                                 foreach (Personnel i in parc.Membres)
@@ -191,6 +190,128 @@ namespace Zombillenium
                                     break;
                                 case 3:
                                     Console.Clear();
+                                    Console.WriteLine("Veuillez indiquer le matricule du monstre à modifier (si vous ne le connaissez pas, nous vous invitons à consulter notre liste du personnel) :");
+                                    int reponseMatr = 0;
+                                    bool stopMatr = false;
+                                    while (stopMatr == false)
+                                    {
+
+                                        string stringMatr = Console.ReadLine();
+                                        if (stringMatr.Length == 5)
+                                        {
+                                            try
+                                            {
+                                                reponseMatr = int.Parse(stringMatr);
+
+                                                stopMatr = true;
+                                            }
+                                            catch (Exception)
+                                            {
+                                                Console.WriteLine("Veuillez entrer un nombre entier : ");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Veuillez vous assurer qu'il s'agit bien d'un matricule à 5 chiffres");
+                                        }
+                                    }
+                                    bool stopModif = false;
+                                    Console.WriteLine("Quelle modification souhaitez vous effectuer ? \n 1) Modifier Cagnotte \n 2) Modifier Affectation \n 3) Modifier Fonction \n 4) Précedent");
+                                    while (stopModif == false)
+                                    {
+                                        int reponseModif = int.Parse(Console.ReadLine());
+                                        switch (reponseModif)
+                                        {
+                                            case 1:
+                                                Console.Clear();
+                                                Console.WriteLine("Veuillez choisir un montant à ajouter (positif, exemple : 5) ou à retirer (négatif, exemple : -2)");
+                                                int reponseCagnotte = int.Parse(Console.ReadLine());
+                                                int count1 = 0;
+                                                foreach (Personnel i in parc.Membres)
+                                                {
+                                                    if (i.Matricule == reponseMatr)
+                                                    {
+                                                        count1++;
+                                                        if (i is Monstre)
+                                                        {
+                                                            parc.GestionCagnotte(i as Monstre, reponseCagnotte);
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.WriteLine("Seul les monstres possèdent une cagnotte, vous avez probablement sélectionné un sorcier");
+                                                        }
+                                                    }
+                                                }
+                                                if (count1 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("Le matricule que vous avez fourni n'existe pas");
+                                                }
+                                                break;
+                                            case 2:
+                                                Console.Clear();
+                                                Console.WriteLine("Veuillez indiquer l'id d'une attraction à affecter (si vous ne le connaissez pas, nous vous invitons à consulter notre liste des attractions) :");
+                                                int reponseID = int.Parse(Console.ReadLine());
+                                                int count2 = 0;
+                                                int count3 = 0;
+                                                foreach (Personnel i in parc.Membres)
+                                                {
+                                                    if (i.Matricule == reponseMatr)
+                                                    {
+                                                        count2++;
+                                                        if (i is Monstre)
+                                                        {
+                                                            foreach (Attraction j in parc.Attractions)
+                                                            {
+                                                                if (j.Id == reponseID)
+                                                                {
+                                                                    count3++;
+                                                                    parc.Affecter(i as Monstre, j);
+                                                                }
+                                                            }                                                    
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Seul les monstres possèdent une affectation, vous avez probablement sélectionné un sorcier");
+                                                        }
+                                                    }                                                  
+                                                }
+                                                if (count2 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("le matricule que vous avez fourni n'existe pas");
+                                                }
+                                                if (count3 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("l'id que vous avez fourni n'existe pas");
+                                                }
+                                                break;
+                                            case 3:
+                                                Console.Clear();
+                                                Console.WriteLine("Veuillez choisir une nouvelle fonction :");
+                                                string reponseFonc = Console.ReadLine();
+                                                int count4 = 0;
+                                                foreach (Personnel i in parc.Membres)
+                                                {
+                                                    if (i.Matricule == reponseMatr)
+                                                    {
+                                                        count4++;
+                                                        i.Fonction = reponseFonc;
+                                                    }
+                                                }
+                                                if (count4 == 0)
+                                                {
+                                                    Console.WriteLine("Le matricule que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 4:
+                                                Console.Clear();
+                                                stopModif = true;
+                                                break;
+                                        }
+                                    }
                                     break;
                                 case 4:
                                     Console.Clear();
@@ -282,7 +403,7 @@ namespace Zombillenium
                                             Console.WriteLine("Veuillez entrer un nombre entier");
                                         }
                                         Console.Clear();
-                                    }                     
+                                    }
                                     bool stopBesoinSpe = false;
                                     bool reponseBesoinSpe = false;
                                     while (stopBesoinSpe == false)
@@ -390,7 +511,7 @@ namespace Zombillenium
                                                 {
                                                     Console.WriteLine("Ajouter horaires ? \n 1) Oui \n 2) Non");
                                                     int reponseHoraire = 0;
-                                                    try { reponseHoraire= int.Parse(Console.ReadLine()); }
+                                                    try { reponseHoraire = int.Parse(Console.ReadLine()); }
                                                     catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
                                                     switch (reponseHoraire)
                                                     {
@@ -462,6 +583,441 @@ namespace Zombillenium
                                     break;
                                 case 3:
                                     Console.Clear();
+                                    bool stopiD = false;
+                                    Console.WriteLine("Veuillez indiquer l'id d'une attraction à modifier (si vous ne le connaissez pas, nous vous invitons à consulter notre liste des attractions) :");
+                                    int reponseiD = 0;
+                                    while (stopiD == false)
+                                    {  
+                                        string stringId = Console.ReadLine();
+                                        if (stringId.Length == 3)
+                                        {
+                                            try
+                                            {
+                                                reponseiD = int.Parse(stringId);
+                                                stopiD = true;
+                                            }
+                                            catch (Exception)
+                                            {
+                                                Console.Clear();
+                                                Console.WriteLine("Veuillez entrer un nombre entier : ");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("Veuillez vous assurer qu'il s'agit bien d'un matricule à 3 chiffres");
+                                        }
+                                    }                                   
+                                    bool stopMod = false;
+                                    Console.Clear();
+                                    Console.WriteLine("Quelle modification souhaitez-vous effectuer ? \n 1) Besoin Spécifique \n 2) Type de besoin \n 3) Maintenance \n 4) Nature_maintenance \n 5) Durée maintenance \n 6) Ouvert \n BOUTIQUE \n 7) Type de boutique \n ROLLERCOASTER \n 8) Age Minimum \n 9) Taille Minimum \n 10) Catégorie \n SPECTACLE \n 11) Nombre places \n 12) Horaires \n 13) Nom de la salle \n DARK RIDE \n 14) Durée \n 15) Vehicule \n 16) Précédent");
+                                    while (stopMod == false)
+                                    {
+                                        int reponseMod = int.Parse(Console.ReadLine());
+                                        switch (reponseMod)
+                                        {
+                                            case 1:
+                                                Console.Clear();
+                                                int count5 = 0;
+                                                Console.WriteLine("L'attraction a-t-elle des besoin spécifiques ? (true or false)");
+                                                bool reponseBeSpe = bool.Parse(Console.ReadLine());
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count5++;
+                                                        i.Besoin_spe = reponseBeSpe;
+                                                    }
+                                                }
+                                                if (count5 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 2:
+                                                Console.Clear();
+                                                int count6 = 0;
+                                                Console.WriteLine("Quel est le type de besoin ?");
+                                                string reponseTypeBe = Console.ReadLine();
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count6++;
+                                                        i.Type_besoin = reponseTypeBe;
+                                                    }
+                                                }
+                                                if (count6 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 3:
+                                                Console.Clear();
+                                                int count7 = 0;
+                                                Console.WriteLine("L'attraction est-elle en maintenance ? (true or false)");
+                                                bool reponseMaintenance = bool.Parse(Console.ReadLine());
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count7++;
+                                                        i.Maintenance = reponseMaintenance;
+                                                    }
+                                                }
+                                                if (count7 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 4:
+                                                Console.Clear();
+                                                int count8 = 0;
+                                                Console.WriteLine("Quelle est la nature de la maintenance ?");
+                                                string reponseNatM = Console.ReadLine();
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count8++;
+                                                        i.Nature_maintenance = reponseNatM;
+                                                    }
+                                                }
+                                                if (count8 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 5:
+                                                Console.Clear();
+                                                int count9 = 0;
+                                                Console.WriteLine("Quelle est la durée de la maintenance ?");
+                                                TimeSpan reponseDureeM = TimeSpan.Parse(Console.ReadLine());
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count9++;
+                                                        i.Duree_maintenance = reponseDureeM;
+                                                    }
+                                                }
+                                                if (count9 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 6:
+                                                Console.Clear();
+                                                int count10 = 0;
+                                                Console.WriteLine("L'attraction est-elle ouverte ? (true or false)");
+                                                bool reponseOuvert = bool.Parse(Console.ReadLine());
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count10++;
+                                                        i.Ouvert = reponseOuvert;
+                                                    }
+                                                }
+                                                if (count10 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 7:
+                                                Console.Clear();
+                                                int count11 = 0;
+                                                Console.WriteLine("Quel est le type de la boutique ?");
+                                                string reponseTypeB = Console.ReadLine();
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count11++;
+                                                        if (i is Boutique)
+                                                        {
+                                                            ((Boutique)i).Type = reponseTypeB;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Cette attraction n'est pas une boutique");
+                                                        }
+                                                    }
+                                                }
+                                                if (count11 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 8:
+                                                Console.Clear();
+                                                int count12 = 0;
+                                                Console.WriteLine("Quel est l'âge minimum pour utiliser le RollerCoaster ?");
+                                                int reponseAgeMin = int.Parse(Console.ReadLine());
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count12++;
+                                                        if (i is RollerCoaster)
+                                                        {
+                                                            ((RollerCoaster)i).AgeMin = reponseAgeMin;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Cette attraction n'est pas un rollercoaster");
+                                                        }
+                                                    }
+                                                }
+                                                if (count12 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 9:
+                                                Console.Clear();
+                                                int count13 = 0;
+                                                Console.WriteLine("Quelle est la taille minimale pour utiliser le RollerCoaster ?");
+                                                float reponseTailleMin = float.Parse(Console.ReadLine());
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count13++;
+                                                        if (i is RollerCoaster)
+                                                        {
+                                                            ((RollerCoaster)i).TailleMin = reponseTailleMin;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Cette attraction n'est pas un rollercoaster");
+                                                        }
+                                                    }
+                                                }
+                                                if (count13 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 10:
+                                                Console.Clear();
+                                                int count14 = 0;
+                                                Console.WriteLine("A quelle catégorie appartient ce rollercoaster ?");
+                                                string reponseCategorie = Console.ReadLine();
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count14++;
+                                                        if (i is RollerCoaster)
+                                                        {
+                                                            ((RollerCoaster)i).Categorie = reponseCategorie;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Cette attraction n'est pas un rollercoaster");
+                                                        }
+                                                    }
+                                                }
+                                                if (count14 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 11:
+                                                Console.Clear();
+                                                int count15 = 0;
+                                                Console.WriteLine("Quel est le nombre de place pour ce spectacle ?");
+                                                int reponseNbrPlaces = int.Parse(Console.ReadLine());
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count15++;
+                                                        if (i is Spectacle)
+                                                        {
+                                                            ((Spectacle)i).Nbr_places = reponseNbrPlaces;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Cette attraction n'est pas un spectacle");
+                                                        }
+                                                    }
+                                                }
+                                                if (count15 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 12:
+                                                Console.Clear();
+                                                int count16 = 0;
+                                                Console.WriteLine("Quelles sont les horaires de ce spectacle ?");
+                                                List<DateTime> reponseHoraires = new List<DateTime>();
+                                                bool stopHoraires = false;
+                                                while (stopHoraires == false)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ajouter horaires ? \n 1) Oui \n 2) Non");
+                                                    int reponseHoraire = 0;
+                                                    try { reponseHoraire = int.Parse(Console.ReadLine()); }
+                                                    catch (Exception)
+                                                    { 
+                                                        Console.Clear(); 
+                                                        Console.WriteLine("Veuillez respecter le format"); 
+                                                    }
+                                                    switch (reponseHoraire)
+                                                    {
+                                                        case 1:
+                                                            Console.Clear();
+                                                            bool stopHoraire = false;
+                                                            while (stopHoraire == false)
+                                                            {
+                                                                Console.WriteLine("Veuillez donner l'horaire (sous la forme hh:mm");
+                                                                try
+                                                                {
+                                                                    DateTime horaireToAdd = DateTime.Parse(Console.ReadLine());
+                                                                    reponseHoraires.Add(horaireToAdd);
+                                                                }
+                                                                catch (Exception)
+                                                                {
+                                                                    Console.Clear();
+                                                                    Console.WriteLine("Erreur d'entrée utilisateur, veuillez respecter le modèle");
+                                                                }
+                                                            }
+                                                            break;
+                                                        case 2:
+                                                            Console.Clear();
+                                                            stopHoraires = true;
+                                                            break;
+                                                    }
+                                                }
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count16++;
+                                                        if (i is Spectacle)
+                                                        {
+                                                            ((Spectacle)i).Horaire = reponseHoraires;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Cette attraction n'est pas un spectacle");
+                                                        }
+                                                    }
+                                                }
+                                                if (count16 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 13:
+                                                Console.Clear();
+                                                int count17 = 0;
+                                                Console.WriteLine("Quel est le nom de la salle où se déroulera le spectacle ?");
+                                                string reponseNomSalle = Console.ReadLine();
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count17++;
+                                                        if (i is Spectacle)
+                                                        {
+                                                            ((Spectacle)i).Nom_salle = reponseNomSalle;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Cette attraction n'est pas un spectacle");
+                                                        }
+                                                    }
+                                                }
+                                                if (count17 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 14:
+                                                Console.Clear();
+                                                int count18 = 0;
+                                                Console.WriteLine("Quel est la durée du Dark Ride ?");
+                                                TimeSpan reponseDuree = TimeSpan.Parse(Console.ReadLine());
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count18++;
+                                                        if (i is DarkRide)
+                                                        {
+                                                            ((DarkRide)i).Duree = reponseDuree;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Cette attraction n'est pas un Dark Ride");
+                                                        }
+                                                    }
+                                                }
+                                                if (count18 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 15:
+                                                Console.Clear();
+                                                int count19 = 0;
+                                                Console.WriteLine("Le DarkRide comporte-t-il des vehicules (true ou false) ?");
+                                                bool reponseVehicule = bool.Parse(Console.ReadLine());
+                                                foreach (Attraction i in parc.Attractions)
+                                                {
+                                                    if (i.Id == reponseiD)
+                                                    {
+                                                        count19++;
+                                                        if (i is DarkRide)
+                                                        {
+                                                            ((DarkRide)i).Vehicule = reponseVehicule;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Cette attraction n'est pas un Dark Ride");
+                                                        }
+                                                    }
+                                                }
+                                                if (count19 == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("L'identifiant que vous avez entré n'existe pas");
+                                                }
+                                                break;
+                                            case 16:
+                                                stopMod = true;
+                                                break;
+
+                                        }
+                                    }
+
                                     break;
                                 case 4:
                                     Console.Clear();

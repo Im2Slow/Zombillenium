@@ -12,7 +12,7 @@ namespace Zombillenium
         public Administration()
         {
             attractions = new List<Attraction>();
-            purgatory = new Boutique(57, "La barbe à SEGPA", 1, false, "", "barbe a papa");
+            purgatory = new Boutique(573, "La barbe à SEGPA", 1, false, "", "barbe a papa");
             attractions.Add(purgatory);
             membres = new List<Personnel>();
         }
