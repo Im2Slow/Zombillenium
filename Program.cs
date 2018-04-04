@@ -216,9 +216,9 @@ namespace Zombillenium
                                         }
                                     }
                                     bool stopModif = false;
-                                    Console.WriteLine("Quelle modification souhaitez vous effectuer ? \n 1) Modifier Cagnotte \n 2) Modifier Affectation \n 3) Modifier Fonction \n 4) Précedent");
                                     while (stopModif == false)
                                     {
+                                        Console.WriteLine("Quelle modification souhaitez vous effectuer ? \n 1) Modifier Cagnotte \n 2) Modifier Affectation \n 3) Modifier Fonction \n 4) Précedent");
                                         int reponseModif = int.Parse(Console.ReadLine());
                                         switch (reponseModif)
                                         {
@@ -227,13 +227,17 @@ namespace Zombillenium
                                                 Console.WriteLine("Veuillez choisir un montant à ajouter (positif, exemple : 5) ou à retirer (négatif, exemple : -2)");
                                                 int reponseCagnotte = int.Parse(Console.ReadLine());
                                                 int count1 = 0;
+                                                Console.WriteLine("dans case 1");
                                                 foreach (Personnel i in parc.Membres)
                                                 {
+                                                    Console.WriteLine("dans foreach");
                                                     if (i.Matricule == reponseMatr)
                                                     {
+                                                        Console.WriteLine("dans if matricule");
                                                         count1++;
                                                         if (i is Monstre)
                                                         {
+                                                            Console.WriteLine("dans if monstre");
                                                             parc.GestionCagnotte(i as Monstre, reponseCagnotte);
                                                         }
                                                         else
@@ -610,9 +614,9 @@ namespace Zombillenium
                                     }                                   
                                     bool stopMod = false;
                                     Console.Clear();
-                                    Console.WriteLine("Quelle modification souhaitez-vous effectuer ? \n 1) Besoin Spécifique \n 2) Type de besoin \n 3) Maintenance \n 4) Nature_maintenance \n 5) Durée maintenance \n 6) Ouvert \n BOUTIQUE \n 7) Type de boutique \n ROLLERCOASTER \n 8) Age Minimum \n 9) Taille Minimum \n 10) Catégorie \n SPECTACLE \n 11) Nombre places \n 12) Horaires \n 13) Nom de la salle \n DARK RIDE \n 14) Durée \n 15) Vehicule \n 16) Précédent");
                                     while (stopMod == false)
                                     {
+                                        Console.WriteLine("Quelle modification souhaitez-vous effectuer ? \n 1) Besoin Spécifique \n 2) Type de besoin \n 3) Maintenance \n 4) Nature_maintenance \n 5) Durée maintenance \n 6) Ouvert \n BOUTIQUE \n 7) Type de boutique \n ROLLERCOASTER \n 8) Age Minimum \n 9) Taille Minimum \n 10) Catégorie \n SPECTACLE \n 11) Nombre places \n 12) Horaires \n 13) Nom de la salle \n DARK RIDE \n 14) Durée \n 15) Vehicule \n 16) Précédent");
                                         int reponseMod = int.Parse(Console.ReadLine());
                                         switch (reponseMod)
                                         {

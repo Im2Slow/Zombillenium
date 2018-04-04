@@ -22,6 +22,7 @@ namespace Zombillenium
 			this.nom = nom;
 			this.type_besoin = type_besoin;
 			this.besoin_spe = besoin_spe;
+            ouvert = true;
 		}
         public int Id
         {
@@ -65,7 +66,7 @@ namespace Zombillenium
         }
 		public override string ToString()
 		{
-            return nom + " , id : " + id + " , nombre min monstres : " + nbr_min_monstres + " , type besoins : " + type_besoin;
+            return nom + " , id : " + id + " , nombre min monstres : " + nbr_min_monstres + ", besoin spécifique : " + besoin_spe + " , type besoins : " + type_besoin + ", état de maintenance : " + maintenance + ", durée maintenance : " + duree_maintenance + ", nature maintenance : " + nature_maintenance + ", ouvert : " + ouvert;
 		}
 	}
 }
