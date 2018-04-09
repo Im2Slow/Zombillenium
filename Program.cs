@@ -217,8 +217,8 @@ namespace Zombillenium
                                     }
                                     bool stopModif = false;
                                     while (stopModif == false)
-                                    Console.WriteLine("Quelle modification souhaitez vous effectuer ? \n 1) Modifier Cagnotte \n 2) Modifier Affectation \n 3) Modifier Fonction \n 4) Précedent");
                                     {
+					Console.WriteLine("Quelle modification souhaitez vous effectuer ? \n 1) Modifier Cagnotte \n 2) Modifier Affectation \n 3) Modifier Fonction \n 4) Précedent");
                                         int reponseModif = int.Parse(Console.ReadLine());
                                         switch (reponseModif)
                                         {
