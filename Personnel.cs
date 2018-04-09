@@ -9,6 +9,23 @@ namespace Zombillenium
 		string nom;
 		string prenom;
 		string sexe;
+        public int Matricule
+        {
+            get { return matricule; }
+            set { matricule = value; }
+        }
+        public string Nom
+        {
+            get { return nom; }
+        }
+        public string Prenom
+        {
+            get { return prenom; }
+        }
+        public string Sexe
+        {
+            get { return sexe; }
+        }
 		public string Fonction
 		{
 			get{ return fonction; }
@@ -21,11 +38,6 @@ namespace Zombillenium
 			this.prenom = prenom;
 			this.sexe = sexe;
 			this.fonction = fonction;
-		}
-        public int Matricule
-        {
-            get { return matricule; }
-            set { matricule = value; }
         }
 		public override string ToString()
 		{

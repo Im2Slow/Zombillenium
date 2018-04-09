@@ -24,6 +24,10 @@ namespace Zombillenium
 			this.besoin_spe = besoin_spe;
             ouvert = true;
 		}
+        public string Nom
+        {
+            get { return nom; }
+        }
         public int Id
         {
             get { return id; }
