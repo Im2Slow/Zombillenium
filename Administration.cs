@@ -54,14 +54,11 @@ namespace Zombillenium
         public List<Monstre> Equipe(Attraction attr)
         {
             List<Monstre> team = new List<Monstre>();
-            foreach (Personnel i in membres)
+            foreach (Monstre i in membres)
             {
-                if (i is Monstre)
+                if (i.Affectation == attr)
                 {
-                    if ((i as Monstre).Affectation == attr)
-                    {
-                        team.Add(i as Monstre);
-                    }
+                    team.Add(i);
                 }
             }
             return team;
@@ -72,34 +69,34 @@ namespace Zombillenium
             {
                 if (i.Ouvert)
                 {
-                    foreach (Personnel j in membres)
+                    foreach (Monstre j in membres)
                     {
-                        if (i.Besoin_spe && j is Monstre)
+                        if (i.Besoin_spe)
                         {
-                            if (i.Type_besoin == "Demon" && j is Demon && (j as Monstre).Affectation == null)
+                            if (i.Type_besoin == "Demon" && j is Demon && j.Affectation == null)
                             {
                                 Affecter(j as Demon, i);
                             }
-                            else if (i.Type_besoin == "Zombie" && j is Zombie && (j as Monstre).Affectation == null)
+                            else if (i.Type_besoin == "Zombie" && j is Zombie && j.Affectation == null)
                             {
                                 Affecter(j as Zombie, i);
                             }
-                            else if (i.Type_besoin == "Vampire" && j is Vampire && (j as Monstre).Affectation == null)
+                            else if (i.Type_besoin == "Vampire" && j is Vampire && j.Affectation == null)
                             {
                                 Affecter(j as Vampire, i);
                             }
-                            else if (i.Type_besoin == "Fantome" && j is Fantome && (j as Monstre).Affectation == null)
+                            else if (i.Type_besoin == "Fantome" && j is Fantome && j.Affectation == null)
                             {
                                 Affecter(j as Fantome, i);
                             }
-                            else if (i.Type_besoin == "LoupGarou" && j is LoupGarou && (j as Monstre).Affectation == null)
+                            else if (i.Type_besoin == "LoupGarou" && j is LoupGarou && j.Affectation == null)
                             {
                                 Affecter(j as LoupGarou, i);
                             }
                         }
-                            if (Equipe(i).Count < i.Nbr_min_monstres && j is Monstre && (j as Monstre).Affectation == null)
+                        if (Equipe(i).Count < i.Nbr_min_monstres && j.Affectation == null)
                         {
-                            Affecter(j as Monstre, i);
+                            Affecter(j, i);
                         }
                     }
                 }
@@ -306,6 +303,99 @@ namespace Zombillenium
 
             }
             monStreamReader.Close();
+        }
+
+        public void SortPersonnelList(string comparisonParameter)
+        {
+            try
+            {
+                membres.Sort(delegate (Personnel p1, Personnel p2)
+                {
+                    int toReturn = 0;
+                switch (comparisonParameter)
+                {
+                    case "nom":
+                        toReturn = String.Compare(p1.Nom, p2.Nom);
+                        break;
+                    case "prenom":
+                        toReturn = String.Compare(p1.Prenom, p2.Prenom);
+                        break;
+                    case "matricule":
+                        toReturn = p1.Matricule - p2.Matricule;
+                        break;
+                    case "fonction":
+                        toReturn = String.Compare(p1.Fonction, p2.Fonction);
+                        break;
+                    case "sexe":
+                        toReturn = String.Compare(p1.Sexe, p2.Sexe);
+                        break;
+                    case "cagnotte":
+                        if (p1 is Monstre && p2 is Monstre)
+                        {
+                            toReturn = (p1 as Monstre).Cagnotte - (p2 as Monstre).Cagnotte;
+                        }
+                        break;
+                    case "type":
+                        //TODO
+                    }
+                    return toReturn;
+                });
+            }
+            catch (NullReferenceException) { }
+        }
+
+        private int TypeToInt(Personnel p)
+        {
+            int toReturn = 0;
+            if (p is Personnel)
+            {
+                toReturn = 1;
+            }
+            else if (p is Monstre)
+            {
+                toReturn = 10;
+            }
+            else if (p is Sorcier)
+            {
+                toReturn = 11;
+            }
+            else if (p is Zombie)
+            {
+                toReturn = 100;
+            }
+            //TODO
+        }
+
+        public void SortAttractionList(string comparisonParameter)
+        {
+            try
+            {
+                attractions.Sort(delegate (Attraction a1, Attraction a2)
+                {
+                    int toReturn = 0;
+                    switch (comparisonParameter)
+                    {
+                        case "nom":
+                            toReturn = String.Compare(a1.Nom, a2.Nom);
+                            break;
+                        case "ouvert":
+                            if (a1.Ouvert && !a2.Ouvert)
+                            {
+                                toReturn = 1;
+                            }
+                            else if (!a1.Ouvert && a2.Ouvert)
+                            {
+                                toReturn = -1;
+                            }
+                            break;
+                        case "nbr_min_monstre":
+                            toReturn = a1.Nbr_min_monstres- a2.Nbr_min_monstres;
+                            break;
+                    }
+                    return toReturn;
+                });
+            }
+            catch (NullReferenceException) { }
         }
 
     }
