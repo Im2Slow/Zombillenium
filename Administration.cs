@@ -54,11 +54,14 @@ namespace Zombillenium
         public List<Monstre> Equipe(Attraction attr)
         {
             List<Monstre> team = new List<Monstre>();
-            foreach (Monstre i in membres)
+            foreach (Personnel i in membres)
             {
-                if (i.Affectation == attr)
+                if (i is Monstre)
                 {
-                    team.Add(i);
+                    if ((i as Monstre).Affectation == attr)
+                    {
+                        team.Add(i as Monstre);
+                    }
                 }
             }
             return team;
@@ -69,34 +72,34 @@ namespace Zombillenium
             {
                 if (i.Ouvert)
                 {
-                    foreach (Monstre j in membres)
+                    foreach (Personnel j in membres)
                     {
-                        if (i.Besoin_spe)
+                        if (i.Besoin_spe && j is Monstre)
                         {
-                            if (i.Type_besoin == "Demon" && j is Demon && j.Affectation == null)
+                            if (i.Type_besoin == "Demon" && j is Demon && (j as Monstre).Affectation == null)
                             {
                                 Affecter(j as Demon, i);
                             }
-                            else if (i.Type_besoin == "Zombie" && j is Zombie && j.Affectation == null)
+                            else if (i.Type_besoin == "Zombie" && j is Zombie && (j as Monstre).Affectation == null)
                             {
                                 Affecter(j as Zombie, i);
                             }
-                            else if (i.Type_besoin == "Vampire" && j is Vampire && j.Affectation == null)
+                            else if (i.Type_besoin == "Vampire" && j is Vampire && (j as Monstre).Affectation == null)
                             {
                                 Affecter(j as Vampire, i);
                             }
-                            else if (i.Type_besoin == "Fantome" && j is Fantome && j.Affectation == null)
+                            else if (i.Type_besoin == "Fantome" && j is Fantome && (j as Monstre).Affectation == null)
                             {
                                 Affecter(j as Fantome, i);
                             }
-                            else if (i.Type_besoin == "LoupGarou" && j is LoupGarou && j.Affectation == null)
+                            else if (i.Type_besoin == "LoupGarou" && j is LoupGarou && (j as Monstre).Affectation == null)
                             {
                                 Affecter(j as LoupGarou, i);
                             }
                         }
-                        if (Equipe(i).Count < i.Nbr_min_monstres && j.Affectation == null)
+                            if (Equipe(i).Count < i.Nbr_min_monstres && j is Monstre && (j as Monstre).Affectation == null)
                         {
-                            Affecter(j, i);
+                            Affecter(j as Monstre, i);
                         }
                     }
                 }
