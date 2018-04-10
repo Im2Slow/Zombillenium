@@ -218,7 +218,7 @@ namespace Zombillenium
                                     bool stopModif = false;
                                     while (stopModif == false)
                                     {
-                                        Console.WriteLine("Quelle modification souhaitez vous effectuer ? \n 1) Modifier Cagnotte \n 2) Modifier Affectation \n 3) Modifier Fonction \n 4) Précedent");
+					Console.WriteLine("Quelle modification souhaitez vous effectuer ? \n 1) Modifier Cagnotte \n 2) Modifier Affectation \n 3) Modifier Fonction \n 4) Précedent");
                                         int reponseModif = int.Parse(Console.ReadLine());
                                         switch (reponseModif)
                                         {
@@ -318,6 +318,8 @@ namespace Zombillenium
                                     }
                                     break;
                                 case 4:
+                                    Console.WriteLine("Specify a comparison parameter : ");
+                                    parc.SortPersonnelList(Console.ReadLine());
                                     Console.Clear();
                                     break;
                                 case 5:
@@ -1024,6 +1026,8 @@ namespace Zombillenium
 
                                     break;
                                 case 4:
+                                    Console.WriteLine("Specify a comparison parameter : ");
+                                    parc.SortAttractionList(Console.ReadLine());
                                     Console.Clear();
                                     break;
                                 case 5:

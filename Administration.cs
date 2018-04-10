@@ -308,6 +308,139 @@ namespace Zombillenium
             monStreamReader.Close();
         }
 
+        public void SortPersonnelList(string comparisonParameter)
+        {
+            try
+            {
+                List<Personnel> temp = new List<Personnel>();
+                foreach(Personnel p in membres)
+                {
+                    switch (comparisonParameter)
+                    {
+                        case "nom":
+                            temp.Add(p);
+                            break;
+                        case "prenom":
+                            temp.Add(p);
+                            break;
+                        case "matricule":
+                            temp.Add(p);
+                            break;
+                        case "fonction":
+                            temp.Add(p);
+                            break;
+                        case "sexe":
+                            temp.Add(p);
+                            break;
+                        case "cagnotte":
+                            if (p is Monstre)
+                            {
+                                temp.Add(p);
+                            }
+                            break;
+                        case "type":
+                            //TODO
+                            temp.Add(p);
+                            break;
+                        case "force":
+                            if(p is Demon)
+                            {
+                                temp.Add(p);
+                            }
+                            break;
+                    }
+                }
+                temp.Sort(delegate (Personnel p1, Personnel p2)
+                {
+                    int toReturn = 0;
+                switch (comparisonParameter)
+                {
+                    case "nom":
+                        toReturn = String.Compare(p1.Nom, p2.Nom);
+                        break;
+                    case "prenom":
+                        toReturn = String.Compare(p1.Prenom, p2.Prenom);
+                        break;
+                    case "matricule":
+                        toReturn = p1.Matricule - p2.Matricule;
+                        break;
+                    case "fonction":
+                        toReturn = String.Compare(p1.Fonction, p2.Fonction);
+                        break;
+                    case "sexe":
+                        toReturn = String.Compare(p1.Sexe, p2.Sexe);
+                        break;
+                    case "cagnotte":
+                        if (p1 is Monstre && p2 is Monstre)
+                        {
+                            toReturn = (p1 as Monstre).Cagnotte - (p2 as Monstre).Cagnotte;
+                        }
+                        break;
+                    case "type":
+                            //TODO
+                            break;
+                    }
+                    return toReturn;
+                });
+            }
+            catch (NullReferenceException) { }
+        }
+
+        private int TypeToInt(Personnel p)
+        {
+            int toReturn = 0;
+            if (p is Personnel)
+            {
+                toReturn = 1;
+            }
+            else if (p is Monstre)
+            {
+                toReturn = 10;
+            }
+            else if (p is Sorcier)
+            {
+                toReturn = 11;
+            }
+            else if (p is Zombie)
+            {
+                toReturn = 100;
+            }
+            //TODO
+            return toReturn;
+        }
+
+        public void SortAttractionList(string comparisonParameter)
+        {
+            try
+            {
+                attractions.Sort(delegate (Attraction a1, Attraction a2)
+                {
+                    int toReturn = 0;
+                    switch (comparisonParameter)
+                    {
+                        case "nom":
+                            toReturn = String.Compare(a1.Nom, a2.Nom);
+                            break;
+                        case "ouvert":
+                            if (a1.Ouvert && !a2.Ouvert)
+                            {
+                                toReturn = 1;
+                            }
+                            else if (!a1.Ouvert && a2.Ouvert)
+                            {
+                                toReturn = -1;
+                            }
+                            break;
+                        case "nbr_min_monstre":
+                            toReturn = a1.Nbr_min_monstres- a2.Nbr_min_monstres;
+                            break;
+                    }
+                    return toReturn;
+                });
+            }
+            catch (NullReferenceException) { }
+        }
+
     }
 }
 //implementation interfaces et delegation
