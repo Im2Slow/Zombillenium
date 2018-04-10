@@ -3,3 +3,9 @@
 /home/adrien/Documents/ProgCsharp/Zombillenium/obj/x86/Debug/Zombillenium.csproj.CoreCompileInputs.cache
 /home/adrien/Documents/ProgCsharp/Zombillenium/obj/x86/Debug/Zombillenium.exe
 /home/adrien/Documents/ProgCsharp/Zombillenium/obj/x86/Debug/Zombillenium.pdb
+C:\Users\adrie\OneDrive\Documents\Prog DOTNET\Zombillenium-master\bin\Debug\Zombillenium.exe
+C:\Users\adrie\OneDrive\Documents\Prog DOTNET\Zombillenium-master\bin\Debug\Zombillenium.pdb
+C:\Users\adrie\OneDrive\Documents\Prog DOTNET\Zombillenium-master\obj\x86\Debug\Zombillenium.csprojResolveAssemblyReference.cache
+C:\Users\adrie\OneDrive\Documents\Prog DOTNET\Zombillenium-master\obj\x86\Debug\Zombillenium.csproj.CoreCompileInputs.cache
+C:\Users\adrie\OneDrive\Documents\Prog DOTNET\Zombillenium-master\obj\x86\Debug\Zombillenium.exe
+C:\Users\adrie\OneDrive\Documents\Prog DOTNET\Zombillenium-master\obj\x86\Debug\Zombillenium.pdb
