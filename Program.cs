@@ -16,7 +16,7 @@ namespace Zombillenium
             const int CAGNOTTE_DEPART = 50;
             while (stopAccueil == false)
             {
-                Console.WriteLine("Bienvenue sur le logiciel de gestion de Zombilenium, choissisez une action à effectuer en entrant le chiffre correspondant : \n 1) Gerer personnel \n 2) Gerer attractions \n 3) Importer via CSV \n 4) Exporter \n 5) Quitter");
+                Console.WriteLine("Bienvenue sur le logiciel de gestion de Zombilenium, choissisez une action à effectuer en entrant le chiffre correspondant : \n 1) Gerer personnel \n 2) Gerer attractions \n 3) Importer via CSV \n 4) Exporter \n 0) Quitter");
                 int reponseAccueil = 0;
                 try { reponseAccueil= int.Parse(Console.ReadLine()); }
                 catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
@@ -27,7 +27,7 @@ namespace Zombillenium
                         bool stopPersonnel = false;
                         while (stopPersonnel == false)
                         {
-                            Console.WriteLine("Gestion du personnel : \n 1) Afficher la liste des membres du personnel \n 2) Ajouter un nouveau membre \n 3) Modifier membre \n 4) Trier liste \n 5) Précédent");
+                            Console.WriteLine("Gestion du personnel : \n 1) Afficher la liste des membres du personnel \n 2) Ajouter un nouveau membre \n 3) Modifier membre \n 4) Trier liste \n 0) Précédent");
                             int reponsePersonnel = 0;
                             try { reponsePersonnel = int.Parse(Console.ReadLine()); }
                             catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
@@ -218,7 +218,7 @@ namespace Zombillenium
                                     bool stopModif = false;
                                     while (stopModif == false)
                                     {
-					Console.WriteLine("Quelle modification souhaitez vous effectuer ? \n 1) Modifier Cagnotte \n 2) Modifier Affectation \n 3) Modifier Fonction \n 4) Précedent");
+			                    		Console.WriteLine("Quelle modification souhaitez vous effectuer ? \n 1) Modifier Cagnotte \n 2) Modifier Affectation \n 3) Modifier Fonction \n 4) Précedent");
                                         int reponseModif = int.Parse(Console.ReadLine());
                                         switch (reponseModif)
                                         {
@@ -318,11 +318,12 @@ namespace Zombillenium
                                     }
                                     break;
                                 case 4:
-                                    Console.WriteLine("Specify a comparison parameter : ");
-                                    parc.SortPersonnelList(Console.ReadLine());
                                     Console.Clear();
+                                    Console.WriteLine("Parametre de comparaison : ");
+                                    parc.SortPersonnelList(Console.ReadLine());
+                                    AfficheListePersonnel(parc.MembresTrie);
                                     break;
-                                case 5:
+                                case 0:
                                     Console.Clear();
                                     stopPersonnel = true;
                                     break;
@@ -337,7 +338,7 @@ namespace Zombillenium
                         bool stopAttraction = false;
                         while (stopAttraction == false)
                         {
-                            Console.WriteLine("Gestion des attractions : \n 1) Afficher la liste des attractions \n 2) Ajouter une nouvelle attraction \n 3) Modifier une attraction \n 4) Trier Liste \n 5) Affectation automatique \n 6) Précédent");
+                            Console.WriteLine("Gestion des attractions : \n 1) Afficher la liste des attractions \n 2) Ajouter une nouvelle attraction \n 3) Modifier une attraction \n 4) Trier Liste \n 5) Affectation automatique \n 0) Précédent");
                             int reponseAttraction = 0;
                             try { reponseAttraction = int.Parse(Console.ReadLine()); }
                             catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
@@ -576,7 +577,7 @@ namespace Zombillenium
                                                 stopType = true;
                                                 break;
 
-                                            case 5:
+                                            case 0:
                                                 Console.Clear();
                                                 stopType = true;
                                                 break;
@@ -1026,15 +1027,16 @@ namespace Zombillenium
 
                                     break;
                                 case 4:
-                                    Console.WriteLine("Specify a comparison parameter : ");
-                                    parc.SortAttractionList(Console.ReadLine());
                                     Console.Clear();
+                                    Console.WriteLine("Parametre de comparaison : ");
+                                    parc.SortAttractionlList(Console.ReadLine());
+                                    AfficheListeAttraction(parc.AttractionsTrie);
                                     break;
                                 case 5:
                                     parc.GestionEquipe();
                                     Console.WriteLine("Affectations réussies");
                                     break;
-                                case 6:
+                                case 0:
                                     Console.Clear();
                                     stopAttraction = true;
                                     break;
@@ -1057,6 +1059,38 @@ namespace Zombillenium
                         }
                         break;
                     case 4:
+                        Console.Clear();
+                        Console.WriteLine("Exportation dans un fichier CSV :\n 1) Exporter dernier tri du personnel\n 2) Exporter dernier tri des attractions\n 3) Exporter tout\n 0) Précédent");
+                        int reponseExport = 0;
+                        try { reponseExport = int.Parse(Console.ReadLine()); }
+                        catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
+                        switch (reponseExport)
+                        {
+                            case 1:
+                                Console.Clear();
+                                Console.WriteLine("Exportation...");
+                                parc.WriteCSVPersonnel("export.csv", parc.MembresTrie);
+                                Console.WriteLine("done");
+                                break;
+                            case 2:
+                                Console.Clear();
+                                Console.WriteLine("Exportation...");
+                                parc.WriteCSVAttractions("export.csv", parc.AttractionsTrie);
+                                Console.WriteLine("done");
+                                break;
+                            case 3:
+                                Console.Clear();
+                                Console.WriteLine("Exportation...");
+                                parc.WriteCSVAttractions("export.csv", parc.Attractions);
+                                parc.WriteCSVPersonnel("export.csv", parc.Membres);
+                                Console.WriteLine("done");
+                                break;
+                            default:
+                                Console.Clear();
+                                break;
+                        }
+                        break;
+                    case 0:
                         Console.Clear();
                         stopAccueil = true;
                         break;

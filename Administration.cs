@@ -7,7 +7,9 @@ namespace Zombillenium
     public class Administration
     {
         List<Attraction> attractions;
+        List<Attraction> attractionsTrie;
         List<Personnel> membres;
+        List<Personnel> membresTrie;
         Boutique purgatory;
         public Administration()
         {
@@ -20,9 +22,17 @@ namespace Zombillenium
         {
             get { return attractions; }
         }
+        public List<Attraction> AttractionsTrie
+        {
+            get { return AttractionsTrie; }
+        }
         public List<Personnel> Membres
         {
             get { return membres; }
+        }
+        public List<Personnel> MembresTrie
+        {
+            get { return membresTrie; }
         }
         public void AjoutAttraction(Attraction toAdd)
         {
@@ -105,6 +115,118 @@ namespace Zombillenium
                 }
             }
         }
+        public void WriteCSVPersonnel(string chemin, List<Personnel> personnelsToWrite)
+        {
+            StreamWriter stream = new StreamWriter(chemin, true);
+            try
+            {
+                foreach (Personnel p in personnelsToWrite)
+                {
+                    string toWrite = p.Matricule + ";" + p.Nom + ";" + p.Prenom + ";" + p.Sexe + ";" + p.Fonction + ";";
+                    if (p is Sorcier)
+                    {
+                        toWrite = "Sorcier;" + toWrite + (p as Sorcier).Tatouage + ";";
+                        foreach (string pouvoir in (p as Sorcier).Pouvoirs)
+                        {
+                            toWrite += pouvoir + "-";
+                        }
+                        toWrite = toWrite.TrimEnd('-');
+                        toWrite += ";";
+                    }
+                    else if (p is Monstre)
+                    {
+
+                        toWrite += +(p as Monstre).Cagnotte + ";";
+                        if ((p as Monstre).Affectation != null)
+                        {
+                            toWrite += (p as Monstre).Affectation.Id + ";";
+                        }
+                        else
+                        {
+                            toWrite += "neant" + ";";
+                        }
+                        if (p is Demon)
+                        {
+                            toWrite = "Demon;" + toWrite + (p as Demon).Force + ";";
+                        }
+                        else if (p is Vampire)
+                        {
+                            toWrite = "Vampire;" + toWrite + (p as Vampire).Indice_luminosite + ";";
+                        }
+                        else if (p is Zombie)
+                        {
+                            toWrite = "Zombie;" + toWrite + (p as Zombie).Couleur + ";" + (p as Zombie).Degre_decomp + ";";
+                        }
+                        else if (p is Fantome)
+                        {
+                            toWrite = "Fantome;" + toWrite;
+                        }
+                        else if (p is LoupGarou)
+                        {
+                            toWrite = "LoupGarou;" + toWrite + (p as LoupGarou).Indice_cruaute + ";";
+                        }
+                        else
+                        {
+                            toWrite = "Monstre;" + toWrite;
+                        }
+                    }
+                    else
+                    {
+                        toWrite = "Personnel;" + toWrite;
+                    }
+                    stream.WriteLine(toWrite);
+                }
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("export: erreur lors de l'ecriture dans un fichier");
+            }
+            stream.Close();
+
+        }
+        public void WriteCSVAttractions(string chemin, List<Attraction> attractionsToWrite)
+        {
+            StreamWriter stream = new StreamWriter(chemin, true);
+            try
+            {
+                foreach (Attraction a in attractionsToWrite)
+                {
+                    string toWrite = a.Id + "; " + a.Nom + "; " + a.Nbr_min_monstres + "; " + a.Besoin_spe + "; " + a.Type_besoin + ";";
+                    if (a is Boutique)
+                    {
+                        toWrite = "Boutique;" + toWrite + (a as Boutique).Type + ";";
+                    }
+                    else if (a is RollerCoaster)
+                    {
+                        toWrite = "RollerCoaster;" + toWrite + (a as RollerCoaster).Categorie + ";" + (a as RollerCoaster).AgeMin + ";" + (a as RollerCoaster).TailleMin + ";";
+                    }
+                    else if (a is DarkRide)
+                    {
+                        toWrite = "DarkRide;" + toWrite + (a as DarkRide).Duree + ";" + (a as DarkRide).Vehicule + ";";
+                    }
+                    else if (a is Spectacle)
+                    {
+                        toWrite = "DarkRide;" + toWrite + (a as Spectacle).Nom_salle + ";" + (a as Spectacle).Nbr_places + ";";
+                        foreach (DateTime time in (a as Spectacle).Horaire)
+                        {
+                            toWrite += time.ToString("HH:mm") + " ";
+                        }
+                        toWrite += ";";
+                    }
+                    else
+                    {
+                        toWrite = "Attraction;" + toWrite;
+                    }
+                    stream.WriteLine(toWrite);
+                }
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("export: erreur lors de l'ecriture dans un fichier");
+            }
+            stream.Close();
+
+        }
         public void ReadCSV(string chemin)
         {
             StreamReader monStreamReader = new StreamReader(chemin);
@@ -131,7 +253,15 @@ namespace Zombillenium
                     switch (temp[0])
                     {
                         case "Boutique":
-                            Boutique b = new Boutique(temp1, temp[2], temp3, temp4, temp[5], temp[6]); 
+                            Boutique b;
+                            if (temp4)
+                            {
+                                b = new Boutique(temp1, temp[2], temp3, temp4, temp[5], temp[6]);
+                            }
+                            else
+                            {
+                                b = new Boutique(temp1, temp[2], temp3, temp4, "", temp[5]);
+                            }
                             AjoutAttraction(b);;
                             break;
                         case "RollerCoaster":
@@ -257,7 +387,7 @@ namespace Zombillenium
                                 float temp8_v;
                                 try
                                 {
-                                    temp8_v = Int32.Parse(temp[8]);
+                                    temp8_v = float.Parse(temp[8]);
                                 }
                                 catch (FormatException)
                                 {
@@ -278,10 +408,10 @@ namespace Zombillenium
                                 }
                                 break;
                             case "LoupGarou":
-                                int temp8_lg;
+                                float temp8_lg;
                                 try
                                 {
-                                    temp8_lg = Int32.Parse(temp[8]);
+                                    temp8_lg = float.Parse(temp[8]);
                                 }
                                 catch (FormatException)
                                 {
@@ -312,86 +442,111 @@ namespace Zombillenium
         {
             try
             {
-                List<Personnel> temp = new List<Personnel>();
+                membresTrie = new List<Personnel>();
                 foreach(Personnel p in membres)
                 {
                     switch (comparisonParameter)
                     {
                         case "nom":
-                            temp.Add(p);
-                            break;
                         case "prenom":
-                            temp.Add(p);
-                            break;
                         case "matricule":
-                            temp.Add(p);
-                            break;
                         case "fonction":
-                            temp.Add(p);
-                            break;
                         case "sexe":
-                            temp.Add(p);
+                        case "type":
+                            membresTrie.Add(p);
                             break;
                         case "cagnotte":
                             if (p is Monstre)
                             {
-                                temp.Add(p);
+                                membresTrie.Add(p);
                             }
-                            break;
-                        case "type":
-                            //TODO
-                            temp.Add(p);
                             break;
                         case "force":
                             if(p is Demon)
                             {
-                                temp.Add(p);
+                                membresTrie.Add(p);
+                            }
+                            break;
+                        case "indice_luminosite":
+                            if (p is Vampire)
+                            {
+                                membresTrie.Add(p);
                             }
                             break;
                     }
                 }
-                temp.Sort(delegate (Personnel p1, Personnel p2)
+                membresTrie.Sort(delegate (Personnel p1, Personnel p2)
                 {
                     int toReturn = 0;
-                switch (comparisonParameter)
-                {
-                    case "nom":
-                        toReturn = String.Compare(p1.Nom, p2.Nom);
-                        break;
-                    case "prenom":
-                        toReturn = String.Compare(p1.Prenom, p2.Prenom);
-                        break;
-                    case "matricule":
-                        toReturn = p1.Matricule - p2.Matricule;
-                        break;
-                    case "fonction":
-                        toReturn = String.Compare(p1.Fonction, p2.Fonction);
-                        break;
-                    case "sexe":
-                        toReturn = String.Compare(p1.Sexe, p2.Sexe);
-                        break;
-                    case "cagnotte":
-                        if (p1 is Monstre && p2 is Monstre)
-                        {
-                            toReturn = (p1 as Monstre).Cagnotte - (p2 as Monstre).Cagnotte;
-                        }
-                        break;
-                    case "type":
-                            //TODO
+                    switch (comparisonParameter)
+                    {
+                        case "nom":
+                            toReturn = String.Compare(p1.Nom, p2.Nom);
+                            break;
+                        case "prenom":
+                            toReturn = String.Compare(p1.Prenom, p2.Prenom);
+                            break;
+                        case "matricule":
+                            toReturn = p1.Matricule - p2.Matricule;
+                            break;
+                        case "fonction":
+                            toReturn = String.Compare(p1.Fonction, p2.Fonction);
+                            break;
+                        case "sexe":
+                            toReturn = String.Compare(p1.Sexe, p2.Sexe);
+                            break;
+                        case "cagnotte":
+                            if (p1 is Monstre && p2 is Monstre)
+                            {
+                                toReturn = (p1 as Monstre).Cagnotte - (p2 as Monstre).Cagnotte;
+                            }
+                            break;
+                        case "type":
+                            toReturn = TypeToInt(p1) - TypeToInt(p2);
+                            break;
+                        case "force":
+                            if (p1 is Demon && p2 is Demon)
+                            {
+                                toReturn = (p1 as Demon).Force - (p2 as Demon).Force;
+                            }
+                            break;
+                        case "indice_luminoste":
+                            if (p1 is Vampire && p2 is Vampire)
+                            {
+                                toReturn = Convert.ToInt32(10 * ((p1 as Vampire).Indice_luminosite - (p2 as Vampire).Indice_luminosite));
+                            }
                             break;
                     }
                     return toReturn;
                 });
             }
-            catch (NullReferenceException) { }
+            catch (NullReferenceException)
+            {
+            }
         }
 
         private int TypeToInt(Personnel p)
         {
             int toReturn = 0;
-            if (p is Personnel)
+            if (p is Zombie)
             {
-                toReturn = 1;
+                toReturn = 100;
+            }
+            else if (p is Demon)
+            {
+                toReturn = 101;
+            }
+            else if (p is LoupGarou)
+            {
+                toReturn = 102;
+            }
+            else if (p is Fantome)
+            {
+                toReturn = 103;
+            }
+            else if (p is Vampire)
+            {
+                toReturn = 104;
             }
             else if (p is Monstre)
             {
@@ -401,19 +556,62 @@ namespace Zombillenium
             {
                 toReturn = 11;
             }
-            else if (p is Zombie)
+            else if (p is Personnel)
             {
-                toReturn = 100;
+                toReturn = 1;
             }
-            //TODO
             return toReturn;
         }
 
-        public void SortAttractionList(string comparisonParameter)
+        public void SortAttractionlList(string comparisonParameter)
         {
             try
             {
-                attractions.Sort(delegate (Attraction a1, Attraction a2)
+                attractionsTrie.Clear();
+                attractionsTrie = new List<Attraction>();
+                foreach (Attraction a in attractions)
+                {
+                    switch (comparisonParameter)
+                    {
+                        case "nom":
+                        case "id":
+                        case "nbr_min_monstres":
+                        case "besoin_spe":
+                        case "maintenance":
+                        case "type_besoin":
+                        case "ouvert":
+                        case "nature_maintenance":
+                            attractionsTrie.Add(a);
+                            break;
+                        case "type_boutique":
+                            if (a is Boutique)
+                            {
+                                attractionsTrie.Add(a);
+                            }
+                            break;
+                        case "vehicule":
+                            if (a is DarkRide)
+                            {
+                                attractionsTrie.Add(a);
+                            }
+                            break;
+                        case "ageMin":
+                        case "categorie":
+                            if (a is RollerCoaster)
+                            {
+                                attractionsTrie.Add(a);
+                            }
+                            break;
+                        case "nbr_places":
+                        case "nom_salle":
+                            if (a is Spectacle)
+                            {
+                                attractionsTrie.Add(a);
+                            }
+                            break;
+                    }
+                }
+                attractionsTrie.Sort(delegate (Attraction a1, Attraction a2)
                 {
                     int toReturn = 0;
                     switch (comparisonParameter)
@@ -421,24 +619,98 @@ namespace Zombillenium
                         case "nom":
                             toReturn = String.Compare(a1.Nom, a2.Nom);
                             break;
-                        case "ouvert":
-                            if (a1.Ouvert && !a2.Ouvert)
-                            {
-                                toReturn = 1;
-                            }
-                            else if (!a1.Ouvert && a2.Ouvert)
+                        case "id":
+                            toReturn = a1.Id - a2.Id;
+                            break;
+                        case "nbr_min_monstres":
+                            toReturn = a1.Nbr_min_monstres - a2.Nbr_min_monstres;
+                            break;
+                        case "besoin_spe":
+                            if (a1.Besoin_spe && !a2.Besoin_spe)
                             {
                                 toReturn = -1;
                             }
+                            else if (!a1.Besoin_spe && a2.Besoin_spe)
+                            {
+                                toReturn = 1;
+                            }
                             break;
-                        case "nbr_min_monstre":
-                            toReturn = a1.Nbr_min_monstres- a2.Nbr_min_monstres;
+                        case "maintenance":
+                            if (a1.Maintenance && !a2.Maintenance)
+                            {
+                                toReturn = -1;
+                            }
+                            else if (!a1.Maintenance && a2.Maintenance)
+                            {
+                                toReturn = 1;
+                            }
+                            break;
+                        case "type_besoin":
+                            toReturn = String.Compare(a1.Type_besoin, a2.Type_besoin);
+                            break;
+                        case "ouvert":
+                            if (a1.Ouvert && !a2.Ouvert)
+                            {
+                                toReturn = -1;
+                            }
+                            else if (!a1.Ouvert && a2.Ouvert)
+                            {
+                                toReturn = 1;
+                            }
+                            break;
+                        case "nature_maintenance":
+                            toReturn = String.Compare(a1.Nature_maintenance, a2.Nature_maintenance);
+                            break;
+                        case "type_boutique":
+                            if (a1 is Boutique && a2 is Boutique)
+                            {
+                                toReturn = String.Compare((a1 as Boutique).Type, (a2 as Boutique).Type);
+                            }
+                            break;
+                        case "vehicule":
+                            if (a1 is DarkRide && a2 is DarkRide)
+                            {
+                                if ((a1 as DarkRide).Vehicule && !(a2 as DarkRide).Vehicule)
+                                {
+                                    toReturn = -1;
+                                }
+                                else if (!(a1 as DarkRide).Vehicule && (a2 as DarkRide).Vehicule)
+                                {
+                                    toReturn = 1;
+                                }
+                            }
+                            break;
+                        case "ageMin":
+                            if (a1 is RollerCoaster && a2 is RollerCoaster)
+                            {
+                                toReturn = (a1 as RollerCoaster).AgeMin - (a2 as RollerCoaster).AgeMin;
+                            }
+                            break;
+                        case "categorie":
+                            if (a1 is RollerCoaster && a2 is RollerCoaster)
+                            {
+                                toReturn = String.Compare((a1 as RollerCoaster).Categorie, (a2 as RollerCoaster).Categorie);
+                            }
+                            break;
+                        case "nbr_places":
+                            if (a1 is Spectacle && a2 is Spectacle)
+                            {
+                                toReturn = (a1 as Spectacle).Nbr_places - (a2 as Spectacle).Nbr_places;
+                            }
+                            break;
+                        case "nom_salle":
+                            if (a1 is Spectacle && a2 is Spectacle)
+                            {
+                                toReturn = String.Compare((a1 as Spectacle).Nom_salle, (a2 as Spectacle).Nom_salle);
+                            }
                             break;
                     }
                     return toReturn;
                 });
             }
-            catch (NullReferenceException) { }
+            catch (NullReferenceException)
+            {
+            }
         }
 
     }
