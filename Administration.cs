@@ -312,7 +312,45 @@ namespace Zombillenium
         {
             try
             {
-                membres.Sort(delegate (Personnel p1, Personnel p2)
+                List<Personnel> temp = new List<Personnel>();
+                foreach(Personnel p in membres)
+                {
+                    switch (comparisonParameter)
+                    {
+                        case "nom":
+                            temp.Add(p);
+                            break;
+                        case "prenom":
+                            temp.Add(p);
+                            break;
+                        case "matricule":
+                            temp.Add(p);
+                            break;
+                        case "fonction":
+                            temp.Add(p);
+                            break;
+                        case "sexe":
+                            temp.Add(p);
+                            break;
+                        case "cagnotte":
+                            if (p is Monstre)
+                            {
+                                temp.Add(p);
+                            }
+                            break;
+                        case "type":
+                            //TODO
+                            temp.Add(p);
+                            break;
+                        case "force":
+                            if(p is Demon)
+                            {
+                                temp.Add(p);
+                            }
+                            break;
+                    }
+                }
+                temp.Sort(delegate (Personnel p1, Personnel p2)
                 {
                     int toReturn = 0;
                 switch (comparisonParameter)
@@ -339,7 +377,8 @@ namespace Zombillenium
                         }
                         break;
                     case "type":
-                        //TODO
+                            //TODO
+                            break;
                     }
                     return toReturn;
                 });
@@ -367,6 +406,7 @@ namespace Zombillenium
                 toReturn = 100;
             }
             //TODO
+            return toReturn;
         }
 
         public void SortAttractionList(string comparisonParameter)
