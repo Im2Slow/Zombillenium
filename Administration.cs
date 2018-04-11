@@ -180,9 +180,9 @@ namespace Zombillenium
         /// <param name="personnelsToWrite">Liste des membres du personnel a ecrire dans le fichier</param>
         public void WriteCSVPersonnel(string chemin, List<Personnel> personnelsToWrite)
         {
-            StreamWriter stream = new StreamWriter(chemin, true);
             try
             {
+                StreamWriter stream = new StreamWriter(chemin, true);
                 foreach (Personnel p in personnelsToWrite)
                 {
                     string toWrite = p.Matricule + ";" + p.Nom + ";" + p.Prenom + ";" + p.Sexe + ";" + p.Fonction + ";";
@@ -239,12 +239,16 @@ namespace Zombillenium
                     }
                     stream.WriteLine(toWrite);
                 }
+                stream.Close();
             }
             catch (IOException)
             {
                 Console.WriteLine("export: erreur lors de l'ecriture dans un fichier");
             }
-            stream.Close();
+            catch (NullReferenceException)
+            {
+                Console.WriteLine("export: erreur lors de l'ecriture dans un fichier");
+            }
 
         }
         /// <summary>
@@ -254,9 +258,9 @@ namespace Zombillenium
         /// <param name="attractionsToWrite">liste d'attractions a ecrire dans le fichier</param>
         public void WriteCSVAttractions(string chemin, List<Attraction> attractionsToWrite)
         {
-            StreamWriter stream = new StreamWriter(chemin, true);
             try
             {
+                StreamWriter stream = new StreamWriter(chemin, true);
                 foreach (Attraction a in attractionsToWrite)
                 {
                     string toWrite = a.Id + ";" + a.Nom + ";" + a.Nbr_min_monstres + ";" + a.Besoin_spe + ";" + a.Type_besoin + ";";
@@ -287,12 +291,16 @@ namespace Zombillenium
                     }
                     stream.WriteLine(toWrite);
                 }
+                stream.Close();
             }
             catch (IOException)
             {
                 Console.WriteLine("export: erreur lors de l'ecriture dans un fichier");
             }
-            stream.Close();
+            catch (NullReferenceException)
+            {
+                Console.WriteLine("export: erreur lors de l'ecriture dans un fichier");
+            }
 
         }
         /// <summary>
