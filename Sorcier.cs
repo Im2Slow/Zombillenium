@@ -7,6 +7,14 @@ namespace Zombillenium
 	{
 		List<string> pouvoirs;
 		string tatouage;
+        public string Tatouage
+        {
+            get { return tatouage; }
+        }
+        public List<string> Pouvoirs
+        {
+            get { return pouvoirs; }
+        }
         public Sorcier (int matricule, string nom, string prenom, string sexe, string fonction, string tatouage, List<string> pouvoirs):base(matricule,nom,prenom,sexe,fonction)
 		{
 			this.tatouage = tatouage;

@@ -14,6 +14,7 @@ namespace Zombillenium
 		string nom;
 		bool ouvert;
 		string type_besoin;
+        int niveauRequis;
 
         public Attraction (int id, string nom,  int nbr_min_monstres, bool besoin_spe, string type_besoin)
 		{
@@ -23,15 +24,22 @@ namespace Zombillenium
 			this.type_besoin = type_besoin;
 			this.besoin_spe = besoin_spe;
             ouvert = true;
+            niveauRequis = 0;
 		}
         public string Nom
         {
             get { return nom; }
+            set { nom = value; }
         }
         public int Id
         {
             get { return id; }
             set { id = value; }
+        }
+        public int NiveauRequis
+        {
+            get { return niveauRequis; }
+            set { niveauRequis = value; }
         }
         public int Nbr_min_monstres
         {
@@ -72,6 +80,21 @@ namespace Zombillenium
 		{
             return nom + " , id : " + id + " , nombre min monstres : " + nbr_min_monstres + ", besoin spécifique : " + besoin_spe + " , type besoins : " + type_besoin + ", état de maintenance : " + maintenance + ", durée maintenance : " + duree_maintenance + ", nature maintenance : " + nature_maintenance + ", ouvert : " + ouvert;
 		}
-	}
+        public void EnvoyerEnMaintenance(TimeSpan duree, string nature)
+        {
+            maintenance = true;
+            duree_maintenance = duree;
+            nature_maintenance = nature;
+            ouvert = false;
+        }
+        public void RemettreEnActivite()
+        {
+            maintenance = false;
+            duree_maintenance = TimeSpan.Zero;
+            nature_maintenance = "";
+            ouvert = true;
+        }
+
+    }
 }
 
