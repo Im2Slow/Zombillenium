@@ -309,78 +309,80 @@ namespace Zombillenium
         /// <param name="chemin">chemin relatif du fichier a lire</param>
         public void ReadCSV(string chemin)
         {
-            StreamReader monStreamReader = new StreamReader(chemin);
-            string ligne;
-            while ((ligne = monStreamReader.ReadLine()) != null)
+            try
             {
-                string[] temp = ligne.Split(';');
-                int temp1 = Int32.Parse(temp[1]);
-                if (temp[0] == "Sorcier")
+                StreamReader monStreamReader = new StreamReader(chemin);
+                string ligne;
+                while ((ligne = monStreamReader.ReadLine()) != null)
                 {
-                    string[] listeValues = temp[7].Split('-');
-                    List<string> powers = new List<string>();
-                    foreach (string value in listeValues)
+                    string[] temp = ligne.Split(';');
+                    int temp1 = Int32.Parse(temp[1]);
+                    if (temp[0] == "Sorcier")
                     {
-                        powers.Add(value);
+                        string[] listeValues = temp[7].Split('-');
+                        List<string> powers = new List<string>();
+                        foreach (string value in listeValues)
+                        {
+                            powers.Add(value);
+                        }
+                        Sorcier so = new Sorcier(temp1, temp[2], temp[3], temp[4], temp[5], temp[6], powers);
+                        AjoutPersonnel(so);
                     }
-                    Sorcier so = new Sorcier(temp1, temp[2], temp[3], temp[4], temp[5], temp[6], powers);
-                    AjoutPersonnel(so);
-                }
-                else if (temp[0] == "Boutique" || temp[0] == "RollerCoaster" || temp[0] == "DarkRide" || temp[0] == "Spectacle")
-                {
-                    int temp3 = Int32.Parse(temp[3]);
-                    bool temp4 = Boolean.Parse(temp[4]);
-                    switch (temp[0])
+                    else if (temp[0] == "Boutique" || temp[0] == "RollerCoaster" || temp[0] == "DarkRide" || temp[0] == "Spectacle")
                     {
-                        case "Boutique":
-                            Boutique b;
-                            if (temp4)
-                            {
-                                b = new Boutique(temp1, temp[2], temp3, temp4, temp[5], temp[6]);
-                            }
-                            else
-                            {
-                                b = new Boutique(temp1, temp[2], temp3, temp4, "", temp[5]);
-                            }
-                            AjoutAttraction(b);;
-                            break;
-                        case "RollerCoaster":
-                            int temp7_rc = Int32.Parse(temp[7]);
-                            float temp8_rc = float.Parse(temp[8]);
-                            RollerCoaster rc = new RollerCoaster(temp1, temp[2], temp3, temp4, temp[5], temp[6], temp7_rc, temp8_rc);
-                            AjoutAttraction(rc);
-                            break;
-                        case "Spectacle":
-                            int temp7_s = Int32.Parse(temp[7]);
-                            List<DateTime> tempList = new List<DateTime>();
-                            string[] listeDate = temp[8].Split(' ');
-                            foreach (string value in listeDate)
-                            {
-                                tempList.Add(DateTime.Parse(value));
-                            }
-                            Spectacle sp = new Spectacle(temp1, temp[2], temp3, temp4, temp[5], temp[6], temp7_s, tempList);
-                            AjoutAttraction(sp);
-                            break;
-                        case "DarkRide":
-                            TimeSpan temp6_d = TimeSpan.Parse(temp[6]);
-                            bool temp7_d = Boolean.Parse(temp[7]);
-                            DarkRide dr = new DarkRide(temp1, temp[2], temp3, temp4, temp[5], temp6_d, temp7_d);
-                            AjoutAttraction(dr);
-                            break;
+                        int temp3 = Int32.Parse(temp[3]);
+                        bool temp4 = Boolean.Parse(temp[4]);
+                        switch (temp[0])
+                        {
+                            case "Boutique":
+                                Boutique b;
+                                if (temp4)
+                                {
+                                    b = new Boutique(temp1, temp[2], temp3, temp4, temp[5], temp[6]);
+                                }
+                                else
+                                {
+                                    b = new Boutique(temp1, temp[2], temp3, temp4, "", temp[5]);
+                                }
+                                AjoutAttraction(b); ;
+                                break;
+                            case "RollerCoaster":
+                                int temp7_rc = Int32.Parse(temp[7]);
+                                float temp8_rc = float.Parse(temp[8]);
+                                RollerCoaster rc = new RollerCoaster(temp1, temp[2], temp3, temp4, temp[5], temp[6], temp7_rc, temp8_rc);
+                                AjoutAttraction(rc);
+                                break;
+                            case "Spectacle":
+                                int temp7_s = Int32.Parse(temp[7]);
+                                List<DateTime> tempList = new List<DateTime>();
+                                string[] listeDate = temp[8].Split(' ');
+                                foreach (string value in listeDate)
+                                {
+                                    tempList.Add(DateTime.Parse(value));
+                                }
+                                Spectacle sp = new Spectacle(temp1, temp[2], temp3, temp4, temp[5], temp[6], temp7_s, tempList);
+                                AjoutAttraction(sp);
+                                break;
+                            case "DarkRide":
+                                TimeSpan temp6_d = TimeSpan.Parse(temp[6]);
+                                bool temp7_d = Boolean.Parse(temp[7]);
+                                DarkRide dr = new DarkRide(temp1, temp[2], temp3, temp4, temp[5], temp6_d, temp7_d);
+                                AjoutAttraction(dr);
+                                break;
+                        }
                     }
-                }
-                else
-                {
-                    int temp6 = Int32.Parse(temp[6]);
-                    int temp7;
-                    try
+                    else
                     {
-                        temp7 = Int32.Parse(temp[7]);
-                    }
-                    catch (FormatException)
-                    {
-                        temp7 = -1;
-                    }
+                        int temp6 = Int32.Parse(temp[6]);
+                        int temp7;
+                        try
+                        {
+                            temp7 = Int32.Parse(temp[7]);
+                        }
+                        catch (FormatException)
+                        {
+                            temp7 = -1;
+                        }
                         switch (temp[0])
                         {
                             case "Monstre":
@@ -414,7 +416,7 @@ namespace Zombillenium
                                     {
                                         Demon d = new Demon(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp8);
                                         //Console.WriteLine(d.ToString());
-                                     AjoutPersonnel(d);
+                                        AjoutPersonnel(d);
                                     }
                                 }
                                 if (temp7 == -1)
@@ -453,8 +455,8 @@ namespace Zombillenium
                                 {
                                     if (i.Id == temp7)
                                     {
-                                    Zombie z = new Zombie(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp[8], temp9);
-                                    AjoutPersonnel(z);
+                                        Zombie z = new Zombie(temp1, temp[2], temp[3], temp[4], temp[5], temp6, i, temp[8], temp9);
+                                        AjoutPersonnel(z);
                                     }
                                 }
                                 if (temp7 == -1)
@@ -512,10 +514,15 @@ namespace Zombillenium
                                 }
                                 break;
                         }
-                }
+                    }
 
+                }
+                monStreamReader.Close();
             }
-            monStreamReader.Close();
+            catch (Exception)
+            {
+                Console.WriteLine("Fichier corrompu");
+            }
         }
         /// <summary>
         /// Trie les membres du personnel selon un critere de comparaison fourni en utilisant une liste des membres du personnel tries distinct de la liste des membres du personnel du parc
