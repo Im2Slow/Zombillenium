@@ -24,7 +24,11 @@ namespace Zombillenium
         }
         public List<Attraction> AttractionsTrie
         {
+<<<<<<< HEAD
             get { return attractionsTrie; }
+=======
+            get { return AttractionsTrie; }
+>>>>>>> 6842b1bb83d76f2431daecaf79847273f1af6009
         }
         public List<Personnel> Membres
         {
@@ -220,7 +224,11 @@ namespace Zombillenium
             {
                 foreach (Attraction a in attractionsToWrite)
                 {
+<<<<<<< HEAD
                     string toWrite = a.Id + ";" + a.Nom + ";" + a.Nbr_min_monstres + ";" + a.Besoin_spe + ";" + a.Type_besoin + ";";
+=======
+                    string toWrite = a.Id + "; " + a.Nom + "; " + a.Nbr_min_monstres + "; " + a.Besoin_spe + "; " + a.Type_besoin + ";";
+>>>>>>> 6842b1bb83d76f2431daecaf79847273f1af6009
                     if (a is Boutique)
                     {
                         toWrite = "Boutique;" + toWrite + (a as Boutique).Type + ";";
@@ -596,6 +604,10 @@ namespace Zombillenium
         {
             try
             {
+<<<<<<< HEAD
+=======
+                attractionsTrie.Clear();
+>>>>>>> 6842b1bb83d76f2431daecaf79847273f1af6009
                 attractionsTrie = new List<Attraction>();
                 foreach (Attraction a in attractions)
                 {
@@ -684,6 +696,7 @@ namespace Zombillenium
                             else if (!a1.Ouvert && a2.Ouvert)
                             {
                                 toReturn = 1;
+<<<<<<< HEAD
                             }
                             break;
                         case "nature_maintenance":
@@ -695,6 +708,19 @@ namespace Zombillenium
                                 toReturn = String.Compare((a1 as Boutique).Type, (a2 as Boutique).Type);
                             }
                             break;
+=======
+                            }
+                            break;
+                        case "nature_maintenance":
+                            toReturn = String.Compare(a1.Nature_maintenance, a2.Nature_maintenance);
+                            break;
+                        case "type_boutique":
+                            if (a1 is Boutique && a2 is Boutique)
+                            {
+                                toReturn = String.Compare((a1 as Boutique).Type, (a2 as Boutique).Type);
+                            }
+                            break;
+>>>>>>> 6842b1bb83d76f2431daecaf79847273f1af6009
                         case "vehicule":
                             if (a1 is DarkRide && a2 is DarkRide)
                             {
