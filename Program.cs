@@ -28,11 +28,7 @@ namespace Zombillenium
                         bool stopPersonnel = false;
                         while (stopPersonnel == false)
                         {
-<<<<<<< HEAD
                             Console.WriteLine("Gestion du personnel : \n 1) Afficher la liste des membres du personnel \n 2) Ajouter un nouveau membre \n 3) Modifier un membre spécifique via matricule (Ce processus est irréversible, merci de prendre connaissance d'un matricule existant) \n 4) Trier liste \n 0) Précédent");
-=======
-                            Console.WriteLine("Gestion du personnel : \n 1) Afficher la liste des membres du personnel \n 2) Ajouter un nouveau membre \n 3) Modifier membre \n 4) Trier liste \n 0) Précédent");
->>>>>>> 6842b1bb83d76f2431daecaf79847273f1af6009
                             int reponsePersonnel = 0;
                             try { reponsePersonnel = int.Parse(Console.ReadLine()); }
                             catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
@@ -343,11 +339,7 @@ namespace Zombillenium
                         bool stopAttraction = false;
                         while (stopAttraction == false)
                         {
-<<<<<<< HEAD
                             Console.WriteLine("Gestion des attractions : \n 1) Afficher la liste des attractions \n 2) Ajouter une nouvelle attraction \n 3) Accéder à une attraction spécifique via id (Ce processus est irréversible, merci de prendre connaissance d'un identifiant existant)\n 4) Trier Liste \n 5) Affectation automatique \n 0) Précédent");
-=======
-                            Console.WriteLine("Gestion des attractions : \n 1) Afficher la liste des attractions \n 2) Ajouter une nouvelle attraction \n 3) Modifier une attraction \n 4) Trier Liste \n 5) Affectation automatique \n 0) Précédent");
->>>>>>> 6842b1bb83d76f2431daecaf79847273f1af6009
                             int reponseAttraction = 0;
                             try { reponseAttraction = int.Parse(Console.ReadLine()); }
                             catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
@@ -1134,38 +1126,6 @@ namespace Zombillenium
                                     Console.Clear();
                                     break;
                             }
-                        }
-                        break;
-                    case 0:
-                        Console.Clear();
-                        Console.WriteLine("Exportation dans un fichier CSV :\n 1) Exporter dernier tri du personnel\n 2) Exporter dernier tri des attractions\n 3) Exporter tout\n 0) Précédent");
-                        int reponseExport = 0;
-                        try { reponseExport = int.Parse(Console.ReadLine()); }
-                        catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
-                        switch (reponseExport)
-                        {
-                            case 1:
-                                Console.Clear();
-                                Console.WriteLine("Exportation...");
-                                parc.WriteCSVPersonnel("export.csv", parc.MembresTrie);
-                                Console.WriteLine("done");
-                                break;
-                            case 2:
-                                Console.Clear();
-                                Console.WriteLine("Exportation...");
-                                parc.WriteCSVAttractions("export.csv", parc.AttractionsTrie);
-                                Console.WriteLine("done");
-                                break;
-                            case 3:
-                                Console.Clear();
-                                Console.WriteLine("Exportation...");
-                                parc.WriteCSVAttractions("export.csv", parc.Attractions);
-                                parc.WriteCSVPersonnel("export.csv", parc.Membres);
-                                Console.WriteLine("done");
-                                break;
-                            default:
-                                Console.Clear();
-                                break;
                         }
                         break;
                     case 0:
