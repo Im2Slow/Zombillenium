@@ -10,6 +10,9 @@ namespace Zombillenium
 		{
             Menu();
 		}
+        /// <summary>
+        /// Affiche un menu dans la console avec lequel interagir par le biais du clavier
+        /// </summary>
         static void Menu()
         {
             bool stopAccueil = false;
@@ -20,7 +23,7 @@ namespace Zombillenium
                 Console.WriteLine("Bienvenue sur le logiciel de gestion de Zombilenium, choissisez une action à effectuer en entrant le chiffre correspondant : \n 1) Gerer personnel \n 2) Gerer attractions \n 3) Importer via CSV \n 4) Exporter \n 0) Quitter");
                 int reponseAccueil = 0;
                 try { reponseAccueil= int.Parse(Console.ReadLine()); }
-                catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
+                catch (FormatException) { Console.WriteLine("Veuillez respecter le format"); }
                 switch (reponseAccueil)
                 {
                     case 1:
@@ -31,7 +34,7 @@ namespace Zombillenium
                             Console.WriteLine("Gestion du personnel : \n 1) Afficher la liste des membres du personnel \n 2) Ajouter un nouveau membre \n 3) Modifier un membre spécifique via matricule (Ce processus est irréversible, merci de prendre connaissance d'un matricule existant) \n 4) Trier liste \n 0) Précédent");
                             int reponsePersonnel = 0;
                             try { reponsePersonnel = int.Parse(Console.ReadLine()); }
-                            catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
+                            catch (FormatException) { Console.WriteLine("Veuillez respecter le format"); }
                             switch (reponsePersonnel)
                             {
                                 case 1:
@@ -72,7 +75,7 @@ namespace Zombillenium
                                                     Console.WriteLine("Matricule déja utilisé, veuillez en choisir un autre :");
                                                 }
                                             }
-                                            catch (Exception)
+                                            catch (FormatException)
                                             {
                                                 Console.WriteLine("Veuillez entrer un nombre entier : ");
                                             }
@@ -101,7 +104,7 @@ namespace Zombillenium
                                         Console.WriteLine("Type du membre : \n 1) Demon \n 2) Fantome \n 3) Loup-garou \n 4) Zombie \n 5) Sorcier \n 6) Vampire \n 7) Autre (Monstre) \n 8) Annuler");
                                         int reponseType = 0;
                                         try { reponseType = int.Parse(Console.ReadLine()); }
-                                        catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
+                                        catch (FormatException) { Console.WriteLine("Veuillez respecter le format"); }
                                         switch (reponseType)
                                         {
                                             case 1:
@@ -206,7 +209,7 @@ namespace Zombillenium
 
                                                 stopMatr = true;
                                             }
-                                            catch (Exception)
+                                            catch (FormatException)
                                             {
                                                 Console.WriteLine("Veuillez entrer un nombre entier : ");
                                             }
@@ -320,7 +323,7 @@ namespace Zombillenium
                                     break;
                                 case 4:
                                     Console.Clear();
-                                    Console.WriteLine("Parametre de comparaison : ");
+                                    Console.WriteLine("Les parametres valides sont : nom, prenom, matricule, fonction, sexe, type, cagnotte, force, indice_luminosite\nParametre de comparaison : ");
                                     parc.SortPersonnelList(Console.ReadLine());
                                     AfficheListePersonnel(parc.MembresTrie);
                                     break;
@@ -342,7 +345,7 @@ namespace Zombillenium
                             Console.WriteLine("Gestion des attractions : \n 1) Afficher la liste des attractions \n 2) Ajouter une nouvelle attraction \n 3) Accéder à une attraction spécifique via id (Ce processus est irréversible, merci de prendre connaissance d'un identifiant existant)\n 4) Trier Liste \n 5) Affectation automatique \n 0) Précédent");
                             int reponseAttraction = 0;
                             try { reponseAttraction = int.Parse(Console.ReadLine()); }
-                            catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
+                            catch (FormatException) { Console.WriteLine("Veuillez respecter le format"); }
                             switch (reponseAttraction)
                             {
                                 case 1:
@@ -382,7 +385,7 @@ namespace Zombillenium
                                                     Console.WriteLine("Id déja utilisé, veuillez en choisir un autre :");
                                                 }
                                             }
-                                            catch (Exception)
+                                            catch (FormatException)
                                             {
                                                 Console.WriteLine("Veuillez entrer un nombre entier : ");
                                             }
@@ -406,7 +409,7 @@ namespace Zombillenium
                                             reponseNbrMinMonstre = int.Parse(Console.ReadLine());
                                             stopNbrMin = true;
                                         }
-                                        catch (Exception)
+                                        catch (FormatException)
                                         {
                                             Console.WriteLine("Veuillez entrer un nombre entier");
                                         }
@@ -422,7 +425,7 @@ namespace Zombillenium
                                             reponseBesoinSpe = bool.Parse(Console.ReadLine());
                                             stopBesoinSpe = true;
                                         }
-                                        catch (Exception)
+                                        catch (FormatException)
                                         {
                                             Console.WriteLine("Erreur d'entrée utilisateur, veuillez respecter le modèle");
                                         }
@@ -438,7 +441,7 @@ namespace Zombillenium
 
                                         int reponseType = 0;
                                         try { reponseType = int.Parse(Console.ReadLine()); }
-                                        catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
+                                        catch (FormatException) { Console.WriteLine("Veuillez respecter le format"); }
 
                                         switch (reponseType)
                                         {
@@ -465,7 +468,7 @@ namespace Zombillenium
                                                         reponseAgeMin = int.Parse(Console.ReadLine());
                                                         stopAgeMin = true;
                                                     }
-                                                    catch (Exception)
+                                                    catch (FormatException)
                                                     {
                                                         Console.Clear();
                                                         Console.WriteLine("Veuillez entrer un nombre entier");
@@ -482,7 +485,7 @@ namespace Zombillenium
                                                         reponseTailleMin = float.Parse(Console.ReadLine());
                                                         stopTaille = true;
                                                     }
-                                                    catch (Exception)
+                                                    catch (FormatException)
                                                     {
                                                         Console.WriteLine("Veuillez entrer un nombre réel");
                                                     }
@@ -506,7 +509,7 @@ namespace Zombillenium
                                                         reponseNbrPlaces = int.Parse(Console.ReadLine());
                                                         stopNbrPlaces = true;
                                                     }
-                                                    catch (Exception)
+                                                    catch (FormatException)
                                                     {
                                                         Console.Clear();
                                                         Console.WriteLine("Veuillez entrer un nombre entier");
@@ -520,7 +523,7 @@ namespace Zombillenium
                                                     Console.WriteLine("Ajouter horaires ? \n 1) Oui \n 2) Non");
                                                     int reponseHoraire = 0;
                                                     try { reponseHoraire = int.Parse(Console.ReadLine()); }
-                                                    catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
+                                                    catch (FormatException) { Console.WriteLine("Veuillez respecter le format"); }
                                                     switch (reponseHoraire)
                                                     {
                                                         case 1:
@@ -534,7 +537,7 @@ namespace Zombillenium
                                                                     DateTime horaireToAdd = DateTime.Parse(Console.ReadLine());
                                                                     horaires.Add(horaireToAdd);
                                                                 }
-                                                                catch (Exception)
+                                                                catch (FormatException)
                                                                 {
                                                                     Console.Clear();
                                                                     Console.WriteLine("Erreur d'entrée utilisateur, veuillez respecter le modèle");
@@ -567,7 +570,7 @@ namespace Zombillenium
                                                         reponseVehicule = bool.Parse(Console.ReadLine());
                                                         stopVehicule = true;
                                                     }
-                                                    catch (Exception)
+                                                    catch (FormatException)
                                                     {
                                                         Console.WriteLine("Erreur d'entrée utilisateur, veuillez respecter le modèle");
                                                     }
@@ -604,7 +607,7 @@ namespace Zombillenium
                                                 reponseiD = int.Parse(stringId);
                                                 stopiD = true;
                                             }
-                                            catch (Exception)
+                                            catch (FormatException)
                                             {
                                                 Console.Clear();
                                                 Console.WriteLine("Veuillez entrer un nombre entier : ");
@@ -893,7 +896,7 @@ namespace Zombillenium
                                                                 Console.WriteLine("Ajouter horaires ? \n 1) Oui \n 2) Non");
                                                                 int reponseHoraire = 0;
                                                                 try { reponseHoraire = int.Parse(Console.ReadLine()); }
-                                                                catch (Exception)
+                                                                catch (FormatException)
                                                                 {
                                                                     Console.Clear();
                                                                     Console.WriteLine("Veuillez respecter le format");
@@ -911,7 +914,7 @@ namespace Zombillenium
                                                                                 DateTime horaireToAdd = DateTime.Parse(Console.ReadLine());
                                                                                 reponseHoraires.Add(horaireToAdd);
                                                                             }
-                                                                            catch (Exception)
+                                                                            catch (FormatException)
                                                                             {
                                                                                 Console.Clear();
                                                                                 Console.WriteLine("Erreur d'entrée utilisateur, veuillez respecter le modèle");
@@ -1046,7 +1049,7 @@ namespace Zombillenium
                                     break;
                                 case 4:
                                     Console.Clear();
-                                    Console.WriteLine("Parametre de comparaison : ");
+                                    Console.WriteLine("Les parametres valides sont : nom, id, nbr_min_monstres, besoin_spe, maintenance, type_besoin, ouvert, nature_maintenance, type_boutique, vehicule, ageMin, categorie, nbr_places, nom_salle\nParametre de comparaison : ");
                                     parc.SortAttractionlList(Console.ReadLine());
                                     AfficheListeAttraction(parc.AttractionsTrie);
                                     break;
@@ -1071,7 +1074,7 @@ namespace Zombillenium
                             parc.ReadCSV("Listing.csv");
                             Console.WriteLine("Importation réussie");
                         }
-                        catch (Exception)
+                        catch (IOException)
                         {
                             Console.WriteLine("Erreur : Fichier corrompu");
                         }
@@ -1085,7 +1088,7 @@ namespace Zombillenium
                             Console.WriteLine("Exportation dans un fichier CSV :\n 1) Exporter dernier tri du personnel\n 2) Exporter dernier tri des attractions\n 3) Exporter tout\n 4) Effacer le contenu de export.csv\n 0) Précédent");
                             int reponseExport = 0;
                             try { reponseExport = int.Parse(Console.ReadLine()); }
-                            catch (Exception) { Console.WriteLine("Veuillez respecter le format"); }
+                            catch (FormatException) { Console.WriteLine("Veuillez respecter le format"); }
                             switch (reponseExport)
                             {
                                 case 1:
@@ -1113,7 +1116,7 @@ namespace Zombillenium
                                         File.WriteAllText("export.csv", String.Empty);
                                         Console.WriteLine("Le contenu du fichier a été effacé avec succès");
                                     }
-                                    catch (Exception)
+                                    catch (IOException)
                                     {
                                         Console.WriteLine("Le fichier n'a pas été encore crée, veuillez faire un premier export avant de tenter d'effacer son contenu");
                                     }
@@ -1139,6 +1142,10 @@ namespace Zombillenium
                 
             }
         }
+        /// <summary>
+        /// Affiche dans la console la liste du personnel fournie
+        /// </summary>
+        /// <param name="liste">Liste du personnel a afficher</param>
         static void AfficheListePersonnel(List<Personnel> liste)
         {
             foreach (Personnel i in liste)
@@ -1146,6 +1153,10 @@ namespace Zombillenium
                 Console.WriteLine("\n" + i.ToString());
             }
         }
+        /// <summary>
+        /// Affiche dans la console la liste des monstres fournie
+        /// </summary>
+        /// <param name="liste">Liste des monstres a afficher</param>
         static void AfficheListeMonstre(List<Monstre> liste)
         {
             foreach (Monstre i in liste)
@@ -1153,6 +1164,10 @@ namespace Zombillenium
                 Console.WriteLine("\n" + i.ToString());
             }
         }
+        /// <summary>
+        /// Affiche dans la console la liste des attractions fournie
+        /// </summary>
+        /// <param name="liste">Liste des attractions a afficher</param>
         static void AfficheListeAttraction(List<Attraction> liste)
         {
             if (liste != null)

@@ -80,6 +80,11 @@ namespace Zombillenium
 		{
             return nom + " , id : " + id + " , nombre min monstres : " + nbr_min_monstres + ", besoin spécifique : " + besoin_spe + " , type besoins : " + type_besoin + ", état de maintenance : " + maintenance + ", durée maintenance : " + duree_maintenance + ", nature maintenance : " + nature_maintenance + ", ouvert : " + ouvert;
 		}
+        /// <summary>
+        /// Modifie l'attraction pour la representer "en maintenance" selon les descriptions fournies
+        /// </summary>
+        /// <param name="duree">Duree de la maintenance</param>
+        /// <param name="nature">Nature de la maintenance</param>
         public void EnvoyerEnMaintenance(TimeSpan duree, string nature)
         {
             maintenance = true;
@@ -87,6 +92,9 @@ namespace Zombillenium
             nature_maintenance = nature;
             ouvert = false;
         }
+        /// <summary>
+        /// Modifie l'attraction pour representer la fin de sa maintenance
+        /// </summary>
         public void RemettreEnActivite()
         {
             maintenance = false;

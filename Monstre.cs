@@ -24,6 +24,9 @@ namespace Zombillenium
 			get {return this.affectation;}
 			set { affectation = value; }
 		}
+        /// <summary>
+        /// Supprime l'affectation d'un monstre a une attraction
+        /// </summary>
         public void Vanish()
         {
             affectation = null;

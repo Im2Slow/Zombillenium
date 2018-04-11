@@ -11,6 +11,9 @@ namespace Zombillenium
         List<Personnel> membres;
         List<Personnel> membresTrie;
         Boutique purgatory;
+        /// <summary>
+        /// Constructeur de l'administration
+        /// </summary>
         public Administration()
         {
             attractions = new List<Attraction>();
@@ -34,19 +37,37 @@ namespace Zombillenium
         {
             get { return membresTrie; }
         }
+        /// <summary>
+        /// Ajoute une attraction fournie a la liste des attractions du parc
+        /// </summary>
+        /// <param name="toAdd">Attraction a ajouter a la liste des attractions du parc</param>
         public void AjoutAttraction(Attraction toAdd)
         {
             attractions.Add(toAdd);
         }
+        /// <summary>
+        /// Ajoute un membre personnel fourni a la liste des membres du personnel du parc
+        /// </summary>
+        /// <param name="toAdd">Membre du personnel a ajouter a la liste des membres du personnel du parc</param>
         public void AjoutPersonnel(Personnel toAdd)
         {
             membres.Add(toAdd);
         }
+        /// <summary>
+        /// Affecte un monstre fourni a une attraction fournie
+        /// </summary>
+        /// <param name="toBeAffected">Monstre a affecter a l'attraction fournie</param>
+        /// <param name="toAffectTo">Attraction a laquelle affecter le monstre fournie</param>
         public void Affecter(Monstre toBeAffected, Attraction toAffectTo)
         {
             toBeAffected.Affectation = toAffectTo;
         }
-        public void GestionCagnotte(Monstre sujet, int montant) //nombre negatif pour retirer des points
+        /// <summary>
+        /// Incremente la cagnotte du monstre fourni par un montant fourni. On utilise un montant negatif pour decrementer la cagnotte
+        /// </summary>
+        /// <param name="sujet">Monstre auquel incrementer la cagnotte</param>
+        /// <param name="montant">Montant par lequel incrementer la cagnotte, negatif pour decrementer la cagnotte</param>
+        public void GestionCagnotte(Monstre sujet, int montant)
         {
             sujet.Cagnotte += montant;
             if (sujet.Cagnotte < 50)
@@ -61,6 +82,11 @@ namespace Zombillenium
                 }
             }
         }
+        /// <summary>
+        /// Genere et retourne la liste des monstres affectes a l'attraction fournie
+        /// </summary>
+        /// <param name="attr">Attraction a laquelle sont affecter les monstres a retourner</param>
+        /// <returns>Liste des montres affectes a l'attraction fournie</returns>
         public List<Monstre> Equipe(Attraction attr)
         {
             List<Monstre> team = new List<Monstre>();
@@ -76,6 +102,9 @@ namespace Zombillenium
             }
             return team;
         }
+        /// <summary>
+        /// Affecte automatiquement a chaque attraction des monstres en fonction des besoin de l'attraction, puis jusqu'a atteindre le nombre de monstre minimal devant etre affecter a chaque attraction, si possible
+        /// </summary>
         public void GestionEquipe() // check les types de monstres , mais n'accède pas encore aux caractéristiques propre à un monstre
         {
             foreach (Attraction i in attractions)
@@ -144,6 +173,11 @@ namespace Zombillenium
                 }
             }
         }
+        /// <summary>
+        /// Contruit un string representant les membres du personnel d'une liste de membres du personnel fourni en format CSV et l'ecrit dans le fichier decrit par son chemin fourni
+        /// </summary>
+        /// <param name="chemin">Chemin relatif du fichier</param>
+        /// <param name="personnelsToWrite">Liste des membres du personnel a ecrire dans le fichier</param>
         public void WriteCSVPersonnel(string chemin, List<Personnel> personnelsToWrite)
         {
             StreamWriter stream = new StreamWriter(chemin, true);
@@ -213,6 +247,11 @@ namespace Zombillenium
             stream.Close();
 
         }
+        /// <summary>
+        /// Contruit un string representant les attractions d'une liste d'attractions fournie en format CSV et l'ecrit dans le fichier decrit par son chemin fourni
+        /// </summary>
+        /// <param name="chemin">chemin relatif du fichier</param>
+        /// <param name="attractionsToWrite">liste d'attractions a ecrire dans le fichier</param>
         public void WriteCSVAttractions(string chemin, List<Attraction> attractionsToWrite)
         {
             StreamWriter stream = new StreamWriter(chemin, true);
@@ -256,6 +295,10 @@ namespace Zombillenium
             stream.Close();
 
         }
+        /// <summary>
+        /// Lis un ficher dont le chemin est fourni et en interprete le contenu en creant les personnels et attractions decrit en format CSV
+        /// </summary>
+        /// <param name="chemin">chemin relatif du fichier a lire</param>
         public void ReadCSV(string chemin)
         {
             StreamReader monStreamReader = new StreamReader(chemin);
@@ -466,7 +509,10 @@ namespace Zombillenium
             }
             monStreamReader.Close();
         }
-
+        /// <summary>
+        /// Trie les membres du personnel selon un critere de comparaison fourni en utilisant une liste des membres du personnel tries distinct de la liste des membres du personnel du parc
+        /// </summary>
+        /// <param name="comparisonParameter">critere de comparaison</param>
         public void SortPersonnelList(string comparisonParameter)
         {
             try
@@ -553,7 +599,11 @@ namespace Zombillenium
             {
             }
         }
-
+        /// <summary>
+        /// Retourne un entier en fonction du type d'un membre du personnel fourni pour comparaison
+        /// </summary>
+        /// <param name="p">Membre du personnel</param>
+        /// <returns>Entier en fonction du type du membre du personnel</returns>
         private int TypeToInt(Personnel p)
         {
             int toReturn = 0;
@@ -591,7 +641,10 @@ namespace Zombillenium
             }
             return toReturn;
         }
-
+        /// <summary>
+        /// Trie les attractions selon un critere de comparaison fourni en utilisant une liste d'attractions triees distinct de la liste d'attractions du parc
+        /// </summary>
+        /// <param name="comparisonParameter">critere de comparaison</param>
         public void SortAttractionlList(string comparisonParameter)
         {
             try
