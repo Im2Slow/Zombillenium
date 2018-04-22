@@ -342,7 +342,7 @@ namespace Zombillenium
                                 }
                                 else
                                 {
-                                    b = new Boutique(temp1, temp[2], temp3, temp4, "", temp[5]);
+                                    b = new Boutique(temp1, temp[2], temp3, temp4, "", temp[6]);
                                 }
                                 AjoutAttraction(b); ;
                                 break;
